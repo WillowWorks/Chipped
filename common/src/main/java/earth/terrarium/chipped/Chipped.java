@@ -2,6 +2,7 @@ package earth.terrarium.chipped;
 
 import earth.terrarium.chipped.common.network.NetworkHandler;
 import earth.terrarium.chipped.common.registry.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class Chipped {
     public static final String MOD_ID = "chipped";
