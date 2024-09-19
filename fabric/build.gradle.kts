@@ -13,12 +13,13 @@ dependencies {
     val fabricLoaderVersion: String by project
     val fabricApiVersion: String by project
     val modMenuVersion: String by project
-    val reiVersion: String by project
+    // val reiVersion: String by project
 
     modImplementation(group = "net.fabricmc", name = "fabric-loader", version = fabricLoaderVersion)
     modApi(group = "net.fabricmc.fabric-api", name = "fabric-api", version = "$fabricApiVersion+$minecraftVersion")
     modApi(group = "com.terraformersmc", name = "modmenu", version = modMenuVersion)
-//    modLocalRuntime(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = reiVersion)
+
+    // modLocalRuntime(group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version = reiVersion)
 
     common(project(":common", configuration = "namedElements")) {
         isTransitive = false
