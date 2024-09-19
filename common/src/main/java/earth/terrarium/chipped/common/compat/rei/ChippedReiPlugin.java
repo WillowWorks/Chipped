@@ -88,6 +88,9 @@ public class ChippedReiPlugin implements REIClientPlugin {
                 // Increment the palette index for the next palette.
                 palettes.put(baseItemDescriptionId, paletteIndex + 1);
 
+                // Importantly, we don't want the group to include the base item itself.
+                ingredientStacks.removeFirst();
+
                 // Register the palette group for this base item.
                 registry.group(
                     // Create a new resource location for this palette's REI group.
