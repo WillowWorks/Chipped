@@ -25,7 +25,7 @@ val common: Configuration by configurations.creating {
 dependencies {
     val minecraftVersion: String by project
     val forgeVersion: String by project
-    val reiVersion: String by project
+    val jeiVersion: String by project
 
     forge(group = "net.minecraftforge", name = "forge", version = "$minecraftVersion-$forgeVersion")
 
@@ -36,6 +36,7 @@ dependencies {
         isTransitive = false
     }
     forgeRuntimeLibrary("com.teamresourceful:bytecodecs:1.0.2")
+    modLocalRuntime(group = "mezz.jei", name = "jei-$minecraftVersion-forge", version = jeiVersion)
 }
 
 tasks.processResources {
