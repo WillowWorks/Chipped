@@ -40,3 +40,10 @@ mandatory = true
 versionRange = "[3.1.1,)"
 ordering = "NONE"
 side = "CLIENT"
+
+[[dependencies.chipped]]
+modId = "jei"
+mandatory = false
+versionRange = "[15.20.0,)"
+ordering = "NONE"
+side = "CLIENT"

@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @JeiPlugin
 public class ChippedJeiPlugin implements IModPlugin {
@@ -65,7 +66,7 @@ public class ChippedJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         registration.addRecipes(ChippedRecipeCategory.BOTANIST_WORKBENCH_RECIPE, flatten(recipeManager.getAllRecipesFor(ModRecipeTypes.BOTANIST_WORKBENCH.get())));
         registration.addRecipes(ChippedRecipeCategory.GLASSBLOWER_RECIPE, flatten(recipeManager.getAllRecipesFor(ModRecipeTypes.GLASSBLOWER.get())));
         registration.addRecipes(ChippedRecipeCategory.CARPENTERS_TABLE_RECIPE, flatten(recipeManager.getAllRecipesFor(ModRecipeTypes.CARPENTERS_TABLE.get())));
@@ -77,12 +78,12 @@ public class ChippedJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.BOTANIST_WORKBENCH.get()), ChippedRecipeCategory.BOTANIST_WORKBENCH_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.GLASSBLOWER.get()), ChippedRecipeCategory.GLASSBLOWER_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CARPENTERS_TABLE.get()), ChippedRecipeCategory.CARPENTERS_TABLE_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.LOOM_TABLE.get()), ChippedRecipeCategory.LOOM_TABLE_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.MASON_TABLE.get()), ChippedRecipeCategory.MASON_TABLE_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALCHEMY_BENCH.get()), ChippedRecipeCategory.ALCHEMY_BENCH_RECIPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.TINKERING_TABLE.get()), ChippedRecipeCategory.TINKERING_TABLE_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.BOTANIST_WORKBENCH.get(), ChippedRecipeCategory.BOTANIST_WORKBENCH_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.GLASSBLOWER.get(), ChippedRecipeCategory.GLASSBLOWER_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.CARPENTERS_TABLE.get(), ChippedRecipeCategory.CARPENTERS_TABLE_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.LOOM_TABLE.get(), ChippedRecipeCategory.LOOM_TABLE_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.MASON_TABLE.get(), ChippedRecipeCategory.MASON_TABLE_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.ALCHEMY_BENCH.get(), ChippedRecipeCategory.ALCHEMY_BENCH_RECIPE);
+        registration.addRecipeCatalyst(ModBlocks.TINKERING_TABLE.get(), ChippedRecipeCategory.TINKERING_TABLE_RECIPE);
     }
 }
