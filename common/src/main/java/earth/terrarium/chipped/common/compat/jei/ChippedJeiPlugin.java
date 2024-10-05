@@ -10,6 +10,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -30,20 +32,24 @@ public class ChippedJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager()
-            .getAllRecipesFor(ModRecipeTypes.WORKBENCH.get()).forEach(recipe ->
-                recipe.value().ingredients().forEach(ingredient ->
-                    registration.addRecipes(WorkbenchCategory.RECIPE, List.of(ingredient))));
+        RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+        recipeManager.getAllRecipesFor(ModRecipeTypes.WORKBENCH.get())
+            .forEach(recipe -> {
+                List<Ingredient> ingredients = recipe.value().ingredients();
+                registration.addRecipes(WorkbenchCategory.RECIPE, ingredients);
+            });
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(ModItems.BOTANIST_WORKBENCH.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.GLASSBLOWER.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.CARPENTERS_TABLE.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.LOOM_TABLE.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.MASON_TABLE.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.ALCHEMY_BENCH.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
-        registration.addRecipeCatalyst(ModItems.TINKERING_TABLE.get().getDefaultInstance(), WorkbenchCategory.RECIPE);
+        registration.addRecipeCatalysts(WorkbenchCategory.RECIPE,
+            ModItems.BOTANIST_WORKBENCH.get(),
+            ModItems.GLASSBLOWER.get(),
+            ModItems.CARPENTERS_TABLE.get(),
+            ModItems.LOOM_TABLE.get(),
+            ModItems.MASON_TABLE.get(),
+            ModItems.ALCHEMY_BENCH.get(),
+            ModItems.TINKERING_TABLE.get()
+        );
     }
 }
