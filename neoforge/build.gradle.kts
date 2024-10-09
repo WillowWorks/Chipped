@@ -22,13 +22,18 @@ val common: Configuration by configurations.creating {
 dependencies {
     val minecraftVersion: String by project
     val neoforgeVersion: String by project
-    val jeiVersion: String by project
+    // val jeiVersion: String by project
+    // val reiVersion: String by project
 
     neoForge(group = "net.neoforged", name = "neoforge", version = neoforgeVersion)
 
-//    modLocalRuntime(group = "mezz.jei", name = "jei-$minecraftVersion-neoforge", version = jeiVersion) {
-//        isTransitive = false
-//    }
+    // modLocalRuntime(group = "mezz.jei", name = "jei-$minecraftVersion-neoforge", version = jeiVersion) {
+    // isTransitive = false
+    // }
+
+    // modLocalRuntime(group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version = reiVersion) {
+    //     isTransitive = false
+    // }
 
     common(project(":common", configuration = "namedElements")) {
         isTransitive = false
