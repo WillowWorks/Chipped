@@ -1,2 +1,3 @@
-- Add new JEI scrolling feature
 - Fix bug with crafting
+- Add new JEI feature ( thanks mezz :D )
+- Add automatic REI grouping ( thanks brittank/mason :D )
