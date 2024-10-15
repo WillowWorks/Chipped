@@ -32,7 +32,7 @@ jobs:
           properties: "version enabledPlatforms minecraftVersion"
 
       - name: Publish Release
-        run: ./gradlew publish --info
+        run: ./gradlew publish
         env:
           MAVEN_USER: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASS: ${{ secrets.MAVEN_PASSWORD }}
