@@ -1,3 +1,2 @@
-- 1.21
-- Added trapdoors to wooden trapdoors tag (#314)
-- Fixed mobs able to spawn on glass (#290)
+- Add new JEI scrolling feature
+- Fix bug with crafting
