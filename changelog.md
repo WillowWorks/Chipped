@@ -1,1 +1,2 @@
-- Fixed Loom Table item model size (#295).
+- Fix bug with crafting
+- Add JEI feature ( thank you mezz :D )

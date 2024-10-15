@@ -114,7 +114,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
 
         boolean canCraft = false;
         for (var result : results) {
-            if (ItemStack.isSameItem(result, stack)) {
+            if (ItemStack.isSameItemSameTags(result, stack)) {
                 canCraft = true;
                 break;
             }
