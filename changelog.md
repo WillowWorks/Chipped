@@ -1,1 +1,1 @@
-- Fixed Loom Table item model size (#295).
+- Fix crafting issue
