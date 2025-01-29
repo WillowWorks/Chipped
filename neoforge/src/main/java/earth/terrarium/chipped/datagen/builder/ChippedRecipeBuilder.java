@@ -6,10 +6,11 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,13 +28,12 @@ public class ChippedRecipeBuilder extends CodecRecipeBuilder {
     }
 
     @Override
-    public void save(RecipeOutput recipeOutput, ResourceLocation id) {
-        var builder = recipeOutput.advancement()
-            .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-            .rewards(AdvancementRewards.Builder.recipe(id))
+    public void save(RecipeOutput output, @NotNull ResourceKey<Recipe<?>> key) {
+        var builder = output.advancement()
+            .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(key))
+            .rewards(AdvancementRewards.Builder.recipe(key))
             .requirements(AdvancementRequirements.Strategy.OR);
         criteria.forEach(builder::addCriterion);
-        recipeOutput.accept(id, recipe, builder
-            .build(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "recipes/workbench/" + id.getPath())));
+        output.accept(key, recipe, builder.build(key.location().withPrefix("recipes/workbench/")));
     }
 }

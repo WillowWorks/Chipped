@@ -22,7 +22,10 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -45,7 +48,7 @@ import java.util.function.Predicate;
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
 public class SpecialPointedDripstoneBlock extends Block implements Fallable, SimpleWaterloggedBlock {
-    public static final DirectionProperty TIP_DIRECTION = BlockStateProperties.VERTICAL_DIRECTION;
+    public static final EnumProperty<Direction> TIP_DIRECTION = BlockStateProperties.VERTICAL_DIRECTION;
     public static final EnumProperty<DripstoneThickness> THICKNESS = BlockStateProperties.DRIPSTONE_THICKNESS;
     public static final BooleanProperty WATERLOGGED;
     private static final VoxelShape TIP_MERGE_SHAPE;
@@ -98,7 +101,7 @@ public class SpecialPointedDripstoneBlock extends Block implements Fallable, Sim
 
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos blockPos = hit.getBlockPos();
-        if (!level.isClientSide && projectile.mayInteract(level, blockPos) && projectile instanceof ThrownTrident && projectile.getDeltaMovement().length() > 0.6) {
+        if (level instanceof ServerLevel serverLevel && projectile.mayInteract(serverLevel, blockPos) && projectile instanceof ThrownTrident && projectile.getDeltaMovement().length() > 0.6) {
             level.destroyBlock(blockPos, true);
         }
 
@@ -221,7 +224,7 @@ public class SpecialPointedDripstoneBlock extends Block implements Fallable, Sim
             voxelShape = BASE_SHAPE;
         }
 
-        Vec3 vec3 = state.getOffset(level, pos);
+        Vec3 vec3 = state.getOffset(pos);
         return voxelShape.move(vec3.x, 0.0, vec3.z);
     }
 
@@ -347,7 +350,7 @@ public class SpecialPointedDripstoneBlock extends Block implements Fallable, Sim
 
     @SuppressWarnings("deprecation")
     private static void spawnDripParticle(Level level, BlockPos pos, BlockState state, Fluid fluid) {
-        Vec3 vec3 = state.getOffset(level, pos);
+        Vec3 vec3 = state.getOffset(pos);
         double e = (double) pos.getX() + 0.5 + vec3.x;
         double f = (double) ((float) (pos.getY() + 1) - 0.6875F) - 0.0625;
         double g = (double) pos.getZ() + 0.5 + vec3.z;
@@ -514,7 +517,7 @@ public class SpecialPointedDripstoneBlock extends Block implements Fallable, Sim
     private static boolean canDripThrough(BlockGetter level, BlockPos pos, BlockState state) {
         if (state.isAir()) {
             return true;
-        } else if (state.isSolidRender(level, pos)) {
+        } else if (state.isSolidRender()) {
             return false;
         } else if (!state.getFluidState().isEmpty()) {
             return false;

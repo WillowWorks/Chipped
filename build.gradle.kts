@@ -55,13 +55,13 @@ subprojects {
 
             officialMojangMappings()
 
-            parchment(create(group = "org.parchmentmc.data", name = "parchment-1.21", version = parchmentVersion))
+            parchment(create(group = "org.parchmentmc.data", name = "parchment-1.21.4", version = parchmentVersion))
         })
 
-        "modApi"(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$modLoader-1.21", version = resourcefulLibVersion)
-        "modApi"(group = "earth.terrarium.athena", name = "athena-$modLoader-1.21", version = athenaVersion)
+        "modApi"(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$modLoader-1.21.4", version = resourcefulLibVersion)
+        "modApi"(group = "earth.terrarium.athena", name = "athena-$modLoader-1.21.4", version = athenaVersion)
         if (isCommon) {
-            "modApi"(group = "mezz.jei", name = "jei-$minecraftVersion-common-api", version = jeiVersion)
+            "modApi"(group = "mezz.jei", name = "jei-1.21.1-common-api", version = jeiVersion)
             "modCompileOnly"(group = "me.shedaniel", name = "RoughlyEnoughItems-api", version = reiVersion)
             "modCompileOnly"(group = "me.shedaniel", name = "RoughlyEnoughItems-default-plugin", version = reiVersion)
         } else {

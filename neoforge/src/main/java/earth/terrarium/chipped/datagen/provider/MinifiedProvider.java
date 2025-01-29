@@ -21,13 +21,13 @@ import java.util.concurrent.CompletableFuture;
 public record MinifiedProvider(DataProvider provider) implements DataProvider {
 
     @Override
-    public CompletableFuture<?> run(CachedOutput output) {
+    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput output) {
         MinifiedOutput minifiedOutput = new MinifiedOutput(output);
         return provider.run(minifiedOutput);
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return provider.getName();
     }
 

@@ -9,11 +9,12 @@ import com.teamresourceful.resourcefullib.common.recipe.CodecRecipe;
 import com.teamresourceful.resourcefullib.common.recipe.CodecRecipeSerializer;
 import earth.terrarium.chipped.common.registry.ModRecipeSerializers;
 import earth.terrarium.chipped.common.registry.ModRecipeTypes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -32,13 +33,6 @@ public record ChippedRecipe(
         ChippedRecipe::new
     );
 
-    public Stream<ItemStack> getResults(ItemStack stack) {
-        return stack.isEmpty() ? Stream.empty() : this.ingredients.stream()
-            .filter(ingredient -> ingredient.test(stack))
-            .map(Ingredient::getItems)
-            .flatMap(Stream::of);
-    }
-
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
         ItemStack stack = recipeInput.getItem(0);
@@ -46,12 +40,33 @@ public record ChippedRecipe(
     }
 
     @Override
-    public CodecRecipeSerializer<? extends CodecRecipe<RecipeInput>> serializer() {
-        return ModRecipeSerializers.WORKBENCH.get();
+    public @NotNull List<RecipeDisplay> display() {
+        return this.ingredients.stream().map(ChippedRecipeDisplay::create).toList();
     }
 
     @Override
-    public RecipeType<?> getType() {
-        return ModRecipeTypes.WORKBENCH.get();
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
+    }
+
+
+    @Override
+    public @NotNull ItemStack assemble(RecipeInput input, HolderLookup.Provider provider) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public @NotNull CodecRecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
+        return null;
+    }
+
+    @Override
+    public RecipeType<? extends Recipe<RecipeInput>> getType() {
+        return null;
+    }
+
+    @Override
+    public @NotNull PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 }

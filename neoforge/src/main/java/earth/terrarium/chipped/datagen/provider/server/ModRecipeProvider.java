@@ -5,6 +5,7 @@ import earth.terrarium.chipped.Chipped;
 import earth.terrarium.chipped.common.registry.ModItems;
 import earth.terrarium.chipped.datagen.builder.ChippedRecipeBuilder;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -16,6 +17,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,29 +25,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
 public class ModRecipeProvider extends RecipeProvider {
-    private RecipeOutput output;
 
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, lookupProvider);
+    private final HolderGetter<Item> items;
+
+    public ModRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+        super(registries, output);
+
+        items = registries.lookupOrThrow(Registries.ITEM);
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput output) {
-        this.output = output;
+    protected void buildRecipes() {
         Map<TagKey<Item>, List<Ingredient>> workbenchTags = new HashMap<>();
 
         ModBlockTagProvider.registerTags((block, registry, tag, workbench, mineableTag) -> {
             var ingredients = workbenchTags.getOrDefault(workbench, new ArrayList<>());
             TagKey<Item> item = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Chipped.MOD_ID, tag));
-            ingredients.add(Ingredient.of(item));
+            ingredients.add(Ingredient.of(this.items.getOrThrow(item)));
             workbenchTags.put(workbench, ingredients);
         });
         workbenchTags.forEach((tag, blocks) -> {
-            Item workbench = BuiltInRegistries.ITEM.get(tag.location());
+            Item workbench = BuiltInRegistries.ITEM.getValue(tag.location());
             createSimpleChippedRecipe(workbench, blocks);
         });
 
@@ -124,20 +127,37 @@ public class ModRecipeProvider extends RecipeProvider {
     private void createSimpleChippedRecipe(Item workbench, List<Ingredient> tags) {
         new ChippedRecipeBuilder(tags)
             .unlockedBy("has_item", has(workbench))
-            .save(output, BuiltInRegistries.ITEM.getKey(workbench));
+            .save(output, BuiltInRegistries.ITEM.getKey(workbench).toString());
     }
 
-    private void shaped(RegistryEntry<Item> result, int count, Supplier<Item> mainItem, Function<ShapedRecipeBuilder, ShapedRecipeBuilder> builder) {
-        builder.apply(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result.get(), count)
-                .define('#', mainItem.get())
-                .unlockedBy("has_" + result.getId().getPath(), has(mainItem.get())))
+    private void shaped(RegistryEntry<? extends Item> result, int count, ItemLike mainItem, Function<ShapedRecipeBuilder, ShapedRecipeBuilder> builder) {
+        builder.apply(shaped(RecipeCategory.MISC, result.get(), count)
+                .define('#', mainItem)
+                .unlockedBy("has_" + result.getId().getPath(), has(mainItem)))
             .save(output, "workbench/" + result.getId().getPath());
     }
 
-    private void shapeless(RegistryEntry<Item> result, int count, Supplier<Item> mainItem, Function<ShapelessRecipeBuilder, ShapelessRecipeBuilder> builder) {
-        builder.apply(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result.get(), count)
-                .requires(mainItem.get())
-                .unlockedBy("has_" + result.getId().getPath(), has(mainItem.get())))
+    private void shapeless(RegistryEntry<? extends Item> result, int count, ItemLike mainItem, Function<ShapelessRecipeBuilder, ShapelessRecipeBuilder> builder) {
+        builder.apply(shapeless(RecipeCategory.MISC, result.get(), count)
+                .requires(mainItem)
+                .unlockedBy("has_" + result.getId().getPath(), has(mainItem)))
             .save(output);
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+
+        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+            super(packOutput, registries);
+        }
+
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+            return new ModRecipeProvider(registries, output);
+        }
+
+        @Override
+        public String getName() {
+            return "Chipped Recipe Provider";
+        }
     }
 }

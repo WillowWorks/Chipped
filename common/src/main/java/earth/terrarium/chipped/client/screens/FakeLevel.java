@@ -85,7 +85,7 @@ public class FakeLevel implements BlockAndTintGetter {
     }
 
     @Override
-    public int getMinBuildHeight() {
+    public int getMinY() {
         return 0;
     }
 
@@ -102,7 +102,7 @@ public class FakeLevel implements BlockAndTintGetter {
         Minecraft mc = Minecraft.getInstance();
         BlockRenderDispatcher dispatcher = mc.getBlockRenderer();
         MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-        RenderType renderType = ItemBlockRenderTypes.getRenderType(state, false);
+        RenderType renderType = ItemBlockRenderTypes.getRenderType(state);
         VertexConsumer consumer = bufferSource.getBuffer(renderType);
 
         RenderSystem.setupGui3DDiffuseLighting(SCENE_LIGHT_1, SCENE_LIGHT_2);

@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -44,13 +45,13 @@ public class WorkbenchBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         player.openMenu(new WorkbenchMenuProvider(getName()));
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level.isClientSide) {
             super.playerWillDestroy(level, pos, state, player);
             return state;
@@ -88,7 +89,7 @@ public class WorkbenchBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return state.getValue(MODEL_TYPE) == WorkbenchModelType.MAIN ? RenderShape.MODEL : RenderShape.INVISIBLE;
     }
 
@@ -99,7 +100,7 @@ public class WorkbenchBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+    protected @NotNull MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
     }
 
@@ -107,7 +108,7 @@ public class WorkbenchBlock extends HorizontalDirectionalBlock {
         MAIN, SIDE;
 
         @Override
-        public String getSerializedName() {
+        public @NotNull String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
         }
 

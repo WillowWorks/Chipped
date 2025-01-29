@@ -12,6 +12,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -181,7 +182,7 @@ public class WorkbenchScreen extends AbstractContainerCursorScreen<WorkbenchMenu
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int left = (width - imageWidth) / 2;
         int top = (height - imageHeight) / 2;
-        graphics.blit(TEXTURE, left, top, 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
+        graphics.blit(RenderType::guiTextured, TEXTURE, left, top, 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
         graphics.drawString(font, PREVIEW_TEXT, left + 11, top + 14, 0x404040, false);
         graphics.drawCenteredString(font, hasShiftDown() ? CRAFT_ALL_TEXT : CRAFT_TEXT, left + 45, top + 106, 0x404040);
 

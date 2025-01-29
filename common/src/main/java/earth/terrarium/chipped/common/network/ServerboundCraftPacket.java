@@ -30,7 +30,6 @@ public record ServerboundCraftPacket(
 
         public Type() {
             super(
-                ServerboundCraftPacket.class,
                 ResourceLocation.fromNamespaceAndPath(Chipped.MOD_ID, "craft"),
                 ObjectByteCodec.create(
                     ExtraByteCodecs.ITEM_STACK.fieldOf(ServerboundCraftPacket::stack),

@@ -86,17 +86,20 @@ public class WorkbenchMenu extends AbstractContainerMenu {
         if (selectedStack.isEmpty()) return;
         this.filter = filter;
         CraftingInput craftingInput = CraftingInput.of(1, 1, List.of(selectedStack));
-        level.getRecipeManager()
-            .getRecipeFor(ModRecipeTypes.WORKBENCH.get(), craftingInput, level).ifPresentOrElse(recipe -> {
-                results.clear();
-                recipe.value().getResults(craftingInput.getItem(0)).forEach(result -> {
-                    if (filter == null
-                        || StringUtil.isBlank(filter)
-                        || result.getDisplayName().getString().toLowerCase(Locale.ROOT).contains(filter.toLowerCase(Locale.ROOT))) {
-                        results.add(result);
-                    }
-                });
-            }, this::reset);
+
+//
+//
+//        level.getRecipeManager()
+//            .getRecipeFor(ModRecipeTypes.WORKBENCH.get(), craftingInput, level).ifPresentOrElse(recipe -> {
+//                results.clear();
+//                recipe.value().getResults(craftingInput.getItem(0)).forEach(result -> {
+//                    if (filter == null
+//                        || StringUtil.isBlank(filter)
+//                        || result.getDisplayName().getString().toLowerCase(Locale.ROOT).contains(filter.toLowerCase(Locale.ROOT))) {
+//                        results.add(result);
+//                    }
+//                });
+//            }, this::reset);
     }
 
     public void craft(ItemStack stack, boolean replaceAll) {

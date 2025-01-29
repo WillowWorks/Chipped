@@ -5,7 +5,8 @@ architectury {
 loom {
     runs {
         create("data") {
-            data()
+            clientData()
+            programArgs("--launchTarget", "neoforgeclientdev")
             programArgs("--all", "--mod", "chipped")
             programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
             programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
