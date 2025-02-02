@@ -1,1 +1,0 @@
-{"type":"minecraft:crafting_shaped","category":"misc","key":{"#":{"item":"minecraft:crafting_table"},"B":{"item":"minecraft:bricks"},"F":{"item":"minecraft:blast_furnace"},"G":{"item":"minecraft:glass"},"I":{"item":"minecraft:iron_ingot"}},"pattern":["IGI","B#B","BFB"],"result":{"count":1,"id":"chipped:glassblower"}}

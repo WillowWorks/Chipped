@@ -1,24 +1,197 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import dev.architectury.plugin.ArchitectPluginExtension
-import groovy.json.StringEscapeUtils
-import net.fabricmc.loom.api.LoomGradleExtensionAPI
-import net.fabricmc.loom.task.RemapJarTask
+// import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+// import groovy.json.StringEscapeUtils
 
 plugins {
-    java
-    id("maven-publish")
-    id("com.teamresourceful.resourcefulgradle") version "0.0.+"
-    id("dev.architectury.loom") version "1.7-SNAPSHOT" apply false
-    id("architectury-plugin") version "3.4-SNAPSHOT"
-    id("com.github.johnrengelman.shadow") version "7.1.2" apply false
+    `maven-publish`
+    idea
+    // id("com.teamresourceful.resourcefulgradle") version "0.0.+"
+    id("earth.terrarium.cloche") version "0.7.+"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-architectury {
-    val minecraftVersion: String by project
-    minecraft = minecraftVersion
+repositories {
+    maven(url = "https://maven.shedaniel.me")
+    maven(url = "https://maven.teamresourceful.com/repository/maven-public/")
+    maven(url = "https://maven.msrandom.net/repository/root/")
 }
 
-subprojects {
+idea {
+    module {
+        excludeDirs.add(file("run"))
+    }
+}
+
+private val minecraftVersion: String by project
+private val _minecraftVersion = minecraftVersion
+
+cloche {
+    val resourcefulLibVersion: String by project
+    val athenaVersion: String by project
+    val jeiVersion: String by project
+    val reiVersion: String by project
+
+    minecraftVersion = _minecraftVersion
+
+    metadata {
+        modId = project.name
+        license = "Terrarium License"
+        issues = "https://github.com/terrarium-earth/chipped/issues"
+        name = "Chipped"
+        url = "https://modrinth.com/mod/chipped"
+        sources = "https://github.com/terrarium-earth/chipped"
+        icon = "icon.png"
+
+        description = "Every block needs a friend!"
+
+        author("Alex Nijjar")
+        author("Grimbop")
+        author("Kekie6")
+        author("ThatGravyBoat")
+
+        contributor("CodexAdrian")
+        contributor("Facu")
+        contributor("Marc-IceBlade")
+        contributor("MsRandom")
+
+        dependency {
+            modId = "resourcefullib"
+            required = true
+
+            version("3.0.0")
+        }
+
+        dependency {
+            modId = "athena"
+            required = true
+
+            version("4.0.0")
+        }
+
+        dependency {
+            modId = "jei"
+            required = false
+
+            version("19.19.3")
+        }
+
+        dependency {
+            modId = "rei"
+            required = false
+
+            version("18.0.796")
+        }
+    }
+
+    common {
+        mixins.from(file("src/common/main/chipped.mixins.json"))
+
+        dependencies {
+            if (System.getProperty("idea.sync.active").toBoolean()) {
+                modCompileOnly(
+                    group = "com.teamresourceful.resourcefullib",
+                    name = "resourcefullib-common-1.21.4",
+                    version = resourcefulLibVersion
+                )
+            }
+
+            modCompileOnly(group = "earth.terrarium.athena", name = "athena-common-1.21.4", version = athenaVersion) {
+                exclude(group = "net.fabricmc", module = "fabric-loader")
+            }
+
+            modApi(group = "mezz.jei", name = "jei-1.21.1-common-api", version = jeiVersion)
+            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-api", version = reiVersion)
+            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-default-plugin", version = reiVersion)
+        }
+    }
+
+    fabric {
+        val fabricLoaderVersion: String by project
+        val fabricApiVersion: String by project
+        val modMenuVersion: String by project
+
+        loaderVersion = fabricLoaderVersion
+
+        client()
+        server()
+        data()
+
+        dependencies {
+            fabricApi("$fabricApiVersion+$_minecraftVersion")
+
+            modApi(group = "com.terraformersmc", name = "modmenu", version = modMenuVersion)
+        }
+
+        metadata {
+            entrypoint("main", "earth.terrarium.chipped.fabric.ChippedFabric")
+            entrypoint("client", "earth.terrarium.chipped.client.fabric.ChippedClientFabric")
+            entrypoint("rei_client", "earth.terrarium.chipped.common.compat.rei.ChippedReiPlugin")
+            entrypoint("jei_mod_plugin", "earth.terrarium.chipped.common.compat.jei.ChippedJeiPlugin")
+        }
+    }
+
+    neoforge {
+        val neoforgeVersion: String by project
+
+        loaderVersion = neoforgeVersion
+
+        client()
+        server()
+        data()
+    }
+
+    targets.all {
+        dependencies {
+            modApi(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$loaderName-1.21.4", version = resourcefulLibVersion)
+            modApi(group = "earth.terrarium.athena", name = "athena-$loaderName-1.21.4", version = athenaVersion)
+
+            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-api-$loaderName", version = reiVersion)
+
+            modCompileOnly(
+                group = "me.shedaniel",
+                name = "RoughlyEnoughItems-default-plugin-$loaderName",
+                version = reiVersion
+            )
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+
+            pom {
+                val modId = project.name
+
+                name.set("Chipped")
+                url.set("https://github.com/terrarium-earth/$modId")
+
+                scm {
+                    connection.set("git:https://github.com/terrarium-earth/$modId.git")
+                    developerConnection.set("git:https://github.com/terrarium-earth/$modId.git")
+                    url.set("https://github.com/terrarium-earth/$modId")
+                }
+
+                licenses {
+                    license {
+                        name.set("MIT")
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            setUrl("https://maven.teamresourceful.com/repository/terrarium/")
+            credentials {
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASS")
+            }
+        }
+    }
+}
+
+/*subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "dev.architectury.loom")
     apply(plugin = "architectury-plugin")
@@ -83,13 +256,6 @@ subprojects {
         archiveClassifier.set(null as String?)
     }
 
-    tasks.processResources {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        filesMatching(listOf("META-INF/neoforge.mods.toml", "fabric.mod.json")) {
-            expand("version" to project.version)
-        }
-    }
-
     if (!isCommon) {
         apply(plugin = "com.github.johnrengelman.shadow")
         configure<ArchitectPluginExtension> {
@@ -106,7 +272,7 @@ subprojects {
                 archiveClassifier.set("dev-shadow")
                 configurations = listOf(shadowCommon)
 
-                exclude("**/ctm/*.png") //Remove CTM textures from jar.
+                exclude("**ctm/*.png") //Remove CTM textures from jar.
                 exclude(".cache/**") //Remove datagen cache from jar.
                 exclude("**/chipped/datagen/**") //Remove data gen code from jar.
                 isZip64 = true
@@ -124,41 +290,6 @@ subprojects {
     idea {
         module {
             excludeDirs.add(file("run"))
-        }
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                artifactId = "$modId-$modLoader-$minecraftVersion"
-                from(components["java"])
-
-                pom {
-                    name.set("Chipped $modLoader")
-                    url.set("https://github.com/terrarium-earth/$modId")
-
-                    scm {
-                        connection.set("git:https://github.com/terrarium-earth/$modId.git")
-                        developerConnection.set("git:https://github.com/terrarium-earth/$modId.git")
-                        url.set("https://github.com/terrarium-earth/$modId")
-                    }
-
-                    licenses {
-                        license {
-                            name.set("MIT")
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                setUrl("https://maven.teamresourceful.com/repository/terrarium/")
-                credentials {
-                    username = System.getenv("MAVEN_USER")
-                    password = System.getenv("MAVEN_PASS")
-                }
-            }
         }
     }
 }
@@ -182,4 +313,4 @@ resourcefulGradle {
             ))
         }
     }
-}
+}*/

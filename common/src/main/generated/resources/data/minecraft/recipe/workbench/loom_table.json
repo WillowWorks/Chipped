@@ -1,1 +1,0 @@
-{"type":"minecraft:crafting_shaped","category":"misc","key":{"#":{"item":"minecraft:crafting_table"},"/":{"item":"minecraft:stick"},"L":{"tag":"minecraft:logs"},"W":{"tag":"minecraft:wool"}},"pattern":["WWW","/#/","LLL"],"result":{"count":1,"id":"chipped:loom_table"}}

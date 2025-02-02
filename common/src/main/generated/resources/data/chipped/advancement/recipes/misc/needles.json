@@ -1,1 +1,0 @@
-{"parent":"minecraft:recipes/root","criteria":{"has_needles":{"conditions":{"items":[{"items":"chipped:loom_table"}]},"trigger":"minecraft:inventory_changed"},"has_the_recipe":{"conditions":{"recipe":"chipped:needles"},"trigger":"minecraft:recipe_unlocked"}},"requirements":[["has_the_recipe","has_needles"]],"rewards":{"recipes":["chipped:needles"]}}

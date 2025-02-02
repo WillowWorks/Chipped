@@ -1,1 +1,0 @@
-{"parent":"minecraft:recipes/root","criteria":{"has_the_recipe":{"conditions":{"recipe":"chipped:watering_can"},"trigger":"minecraft:recipe_unlocked"},"has_watering_can":{"conditions":{"items":[{"items":"chipped:botanist_workbench"}]},"trigger":"minecraft:inventory_changed"}},"requirements":[["has_the_recipe","has_watering_can"]],"rewards":{"recipes":["chipped:watering_can"]}}

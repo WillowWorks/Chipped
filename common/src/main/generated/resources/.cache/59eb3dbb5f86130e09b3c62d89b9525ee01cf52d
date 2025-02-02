@@ -1,8 +1,0 @@
-// 1.21	2024-06-15T12:25:15.08216	Loot Tables
-7d3c5951c31a27dea9ce60688a408f01814dc46c data/chipped/loot_table/blocks/alchemy_bench.json
-348725815b4fdb1649533b203ee89e9a9dc7597f data/chipped/loot_table/blocks/botanist_workbench.json
-22dd3c100e6e857879563c7f972ff04c5843e84a data/chipped/loot_table/blocks/carpenters_table.json
-4f7548122dc75bd53354590a8943bdc5cf09107c data/chipped/loot_table/blocks/glassblower.json
-a0d75ef28da3e5defbb23ff4e1c205bdb1b740a3 data/chipped/loot_table/blocks/loom_table.json
-3b516b39522c81cec363d9ba7c9864e80adcf607 data/chipped/loot_table/blocks/mason_table.json
-0f2856578393049b9af8d6e76eab5abae60a7a9b data/chipped/loot_table/blocks/tinkering_table.json

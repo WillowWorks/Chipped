@@ -4,13 +4,9 @@ rootProject.name = "chipped"
 
 pluginManagement {
     repositories {
-        maven(url = "https://maven.architectury.dev/")
-        maven(url = "https://maven.minecraftforge.net/")
+        mavenLocal()
         maven(url = "https://maven.teamresourceful.com/repository/maven-public/")
+        maven(url = "https://maven.msrandom.net/repository/root")
         gradlePluginPortal()
     }
 }
-
-include("common")
-include("fabric")
-include("neoforge")

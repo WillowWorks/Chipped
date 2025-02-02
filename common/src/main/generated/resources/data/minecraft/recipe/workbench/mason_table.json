@@ -1,1 +1,0 @@
-{"type":"minecraft:crafting_shaped","category":"misc","key":{"#":{"item":"minecraft:crafting_table"},"B":{"item":"minecraft:brick"},"I":{"item":"minecraft:iron_ingot"},"L":{"tag":"minecraft:logs"}},"pattern":["BBB","I#I","LLL"],"result":{"count":1,"id":"chipped:mason_table"}}

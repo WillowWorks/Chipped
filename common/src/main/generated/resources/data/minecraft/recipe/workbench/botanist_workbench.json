@@ -1,1 +1,0 @@
-{"type":"minecraft:crafting_shaped","category":"misc","key":{"#":{"item":"minecraft:crafting_table"},"/":{"item":"minecraft:stick"},"F":{"item":"minecraft:flower_pot"},"S":{"tag":"minecraft:wooden_slabs"}},"pattern":["FFF","S#S","/ /"],"result":{"count":1,"id":"chipped:botanist_workbench"}}

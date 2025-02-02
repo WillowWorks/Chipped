@@ -1,1 +1,0 @@
-{"type":"minecraft:crafting_shaped","category":"misc","key":{"#":{"item":"minecraft:crafting_table"},"B":{"item":"minecraft:brewing_stand"},"E":{"item":"minecraft:enchanting_table"},"S":{"tag":"minecraft:wooden_slabs"}},"pattern":[" B ","S#S","SES"],"result":{"count":1,"id":"chipped:alchemy_bench"}}

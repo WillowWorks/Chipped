@@ -1,1 +1,0 @@
-{"parent":"minecraft:recipes/root","criteria":{"has_saw":{"conditions":{"items":[{"items":"chipped:carpenters_table"}]},"trigger":"minecraft:inventory_changed"},"has_the_recipe":{"conditions":{"recipe":"chipped:saw"},"trigger":"minecraft:recipe_unlocked"}},"requirements":[["has_the_recipe","has_saw"]],"rewards":{"recipes":["chipped:saw"]}}
