@@ -86,13 +86,11 @@ cloche {
         mixins.from(file("src/common/main/chipped.mixins.json"))
 
         dependencies {
-            if (System.getProperty("idea.sync.active").toBoolean()) {
-                modCompileOnly(
-                    group = "com.teamresourceful.resourcefullib",
-                    name = "resourcefullib-common-1.21.4",
-                    version = resourcefulLibVersion
-                )
-            }
+            modCompileOnly(
+                group = "com.teamresourceful.resourcefullib",
+                name = "resourcefullib-common-1.21.4",
+                version = resourcefulLibVersion
+            )
 
             modCompileOnly(group = "earth.terrarium.athena", name = "athena-common-1.21.4", version = athenaVersion) {
                 exclude(group = "net.fabricmc", module = "fabric-loader")
