@@ -337,7 +337,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.@NotNull Provider provider) {
+    protected void addTags(@NotNull HolderLookup.Provider provider) {
         registerTags(this::createSet);
         registerSpecial(this::createSet);
         addVanillaTags();

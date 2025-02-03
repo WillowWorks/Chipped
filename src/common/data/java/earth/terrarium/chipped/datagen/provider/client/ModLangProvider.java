@@ -3,15 +3,15 @@ package earth.terrarium.chipped.datagen.provider.client;
 import earth.terrarium.chipped.Chipped;
 import earth.terrarium.chipped.common.registry.ModBlocks;
 import earth.terrarium.chipped.common.registry.ModItems;
+import earth.terrarium.chipped.datagen.provider.base.LangProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.RedstoneWallTorchBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
-public class ModLangProvider extends LanguageProvider {
+public class ModLangProvider extends LangProvider {
     public ModLangProvider(PackOutput pGenerator) {
         super(pGenerator, Chipped.MOD_ID, "en_us");
     }
@@ -25,7 +25,7 @@ public class ModLangProvider extends LanguageProvider {
                 || e.get() instanceof WallTorchBlock
                 || e.get() instanceof RedstoneWallTorchBlock))
             .forEach(entry -> addBlock(entry,
-                StringUtils.capitaliseAllWords(entry
+                StringUtils.capitalize(entry
                     .getId()
                     .getPath()
                     .replace("_", " "))));
@@ -33,7 +33,7 @@ public class ModLangProvider extends LanguageProvider {
         ModItems.ITEMS.stream()
             .filter(i -> !(i.get() instanceof BlockItem))
             .forEach(entry -> addItem(entry,
-                StringUtils.capitaliseAllWords(entry
+                StringUtils.capitalize(entry
                     .getId()
                     .getPath()
                     .replace("_", " "))));

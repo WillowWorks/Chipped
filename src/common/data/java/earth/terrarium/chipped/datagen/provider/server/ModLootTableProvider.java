@@ -32,7 +32,6 @@ public class ModLootTableProvider extends LootTableProvider {
             ModBlocks.BENCHES.stream().map(RegistryEntry::get).forEach(this::dropSelf);
         }
 
-        @Override
         protected @NotNull Iterable<Block> getKnownBlocks() {
             return ModBlocks.BENCHES.stream().map(RegistryEntry::get).toList();
         }

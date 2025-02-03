@@ -135,6 +135,11 @@ cloche {
         client()
         server()
         data()
+
+        metadata {
+            // TODO remove when fixed
+            blurLogo = true
+        }
     }
 
     targets.all {
