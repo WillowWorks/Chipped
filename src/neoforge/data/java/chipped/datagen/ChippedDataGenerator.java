@@ -2,6 +2,7 @@ package chipped.datagen;
 
 import earth.terrarium.chipped.Chipped;
 import earth.terrarium.chipped.datagen.provider.MinifiedProvider;
+import earth.terrarium.chipped.datagen.provider.client.ModAthenaDefinitionProvider;
 import earth.terrarium.chipped.datagen.provider.client.ModCtmTextureProvider;
 import earth.terrarium.chipped.datagen.provider.client.ModLangProvider;
 import earth.terrarium.chipped.datagen.provider.server.ModBlockTagProvider;
@@ -27,7 +28,8 @@ public final class ChippedDataGenerator {
     private static void gatherClientData(GatherDataEvent event) {
         ResourceManager resources = event.getResourceManager(PackType.CLIENT_RESOURCES);
         addProvider(event, ModLangProvider::new);
-        addProvider(event, output -> new ModCtmTextureProvider(output, resources));
+        var textures = addProvider(event, output -> new ModCtmTextureProvider(output, resources));
+        addProvider(event, (out, lookup) -> new ModAthenaDefinitionProvider(out, textures));
     }
 
     private static void gatherServerData(GatherDataEvent event) {
@@ -38,8 +40,10 @@ public final class ChippedDataGenerator {
         addProvider(event, ModRecipeProvider.Runner::new);
     }
 
-    private static void addProvider(GatherDataEvent event, GatherDataEvent.DataProviderFromOutput<DataProvider> provider) {
-        event.<DataProvider>createProvider(output -> new MinifiedProvider(provider.create(output)));
+    private static <T extends DataProvider> T addProvider(GatherDataEvent event, GatherDataEvent.DataProviderFromOutput<T> factory) {
+        var provider = factory.create(event.getGenerator().getPackOutput());
+        event.addProvider(new MinifiedProvider(provider));
+        return provider;
     }
 
     private static <T extends DataProvider> T addProvider(GatherDataEvent event, GatherDataEvent.DataProviderFromOutputLookup<T> factory) {

@@ -5,7 +5,6 @@ import earth.terrarium.chipped.Chipped;
 import earth.terrarium.chipped.common.registry.ModBlocks;
 import earth.terrarium.chipped.common.registry.base.ChippedPaletteRegistry;
 import net.minecraft.Util;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -176,7 +175,7 @@ public class ModCtmTextureProvider implements DataProvider {
         for (ChippedPaletteRegistry registry : registries) {
             futures.add(CompletableFuture.supplyAsync(() -> {
                 final Map<ImageData, List<ResourceLocation>> images = new LinkedHashMap<>();
-                final String id = registry.getCustomBase().orElse(BuiltInRegistries.BLOCK.getKey(registry.getBase()).getPath());
+                final String id = registry.getBasePath();
                 for (var ctm : registry.getPalette().getSpecial()) {
                     final String suffix = !ctm.getFirst().suffix().isEmpty() ? "_" + ctm.getFirst().suffix() : "";
                     final ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Chipped.MOD_ID, "textures/block/" + id + "/ctm/" + ctm.getSecond().replace("%", id) + suffix);
