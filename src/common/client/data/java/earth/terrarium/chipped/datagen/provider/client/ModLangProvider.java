@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class ModLangProvider extends LangProvider {
     public ModLangProvider(PackOutput pGenerator) {
         super(pGenerator, Chipped.MOD_ID, "en_us");
@@ -24,19 +27,21 @@ public class ModLangProvider extends LangProvider {
             .filter(e -> !(e.get() instanceof WallSignBlock
                 || e.get() instanceof WallTorchBlock
                 || e.get() instanceof RedstoneWallTorchBlock))
-            .forEach(entry -> addBlock(entry,
-                StringUtils.capitalize(entry
-                    .getId()
-                    .getPath()
-                    .replace("_", " "))));
+            .forEach(entry -> {
+                String name = Arrays.stream(entry.getId().getPath().split("_"))
+                    .map(StringUtils::capitalize)
+                    .collect(Collectors.joining(" "));
+                addBlock(entry, name);
+            });
 
         ModItems.ITEMS.stream()
             .filter(i -> !(i.get() instanceof BlockItem))
-            .forEach(entry -> addItem(entry,
-                StringUtils.capitalize(entry
-                    .getId()
-                    .getPath()
-                    .replace("_", " "))));
+            .forEach(entry -> {
+                String name = Arrays.stream(entry.getId().getPath().split("_"))
+                    .map(StringUtils::capitalize)
+                    .collect(Collectors.joining(" "));
+                addItem(entry, name);
+            });
 
         add("container.chipped.botanist_workbench", "Botanist's Workbench");
         add("container.chipped.glassblower", "Glassblower's Workbench");

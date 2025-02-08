@@ -213,11 +213,15 @@ public class ModAthenaDefinitionProvider implements DataProvider {
                 JsonObject json = new JsonObject();
                 JsonObject textures = new JsonObject();
 
-                textures.addProperty("particle", "chipped:block/%s/%s".formatted(id, blockid));
+                // TODO - this is awful and is a temporary fix and should be removed and replaced with a proper solution and not a hack and a half and a half and a half and a half
+                var badId = id.replaceAll("_pane$", "");
+                var badBlockid = entry.getSecond().replace("%", badId);
+
+                textures.addProperty("particle", "chipped:block/%s/%s".formatted(badId, badBlockid));
                 String suffix = !type.suffix().isEmpty() ? "_" + type.suffix() : "";
 
                 for (var textureId : type.getTextureIds()) {
-                    String location = "%s:block/%s/ctm/%s/%s".formatted(Chipped.MOD_ID, id, blockid + suffix, textureId.keyInt());
+                    String location = "%s:block/%s/ctm/%s/%s".formatted(Chipped.MOD_ID, badId, badBlockid + suffix, textureId.keyInt());
                     textures.addProperty(textureId.value(), this.textures.getTexture(location));
                 }
                 type.addTextureInfo(json);

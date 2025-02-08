@@ -1,6 +1,5 @@
 package earth.terrarium.chipped.common.registry;
 
-import com.mojang.datafixers.util.Pair;
 import com.teamresourceful.resourcefullib.common.lib.Constants;
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
@@ -16,9 +15,6 @@ import earth.terrarium.chipped.common.palette.Palette;
 import earth.terrarium.chipped.common.palette.Palettes;
 import earth.terrarium.chipped.common.registry.base.ChippedPaletteRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.CaveFeatures;
@@ -30,7 +26,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PlaceOnWaterBlockItem;
-import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -178,7 +173,6 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry WARPED_TRAPDOOR = createRegistry(Blocks.WARPED_TRAPDOOR, Palettes.WARPED_TRAPDOOR, props -> new TrapDoorBlock(BlockSetType.WARPED, props));
     public static final ChippedPaletteRegistry CHERRY_TRAPDOOR = createRegistry(Blocks.CHERRY_TRAPDOOR, Palettes.CHERRY_TRAPDOOR, props -> new TrapDoorBlock(BlockSetType.CHERRY, props));
     public static final ChippedPaletteRegistry BAMBOO_TRAPDOOR = createRegistry(Blocks.BAMBOO_TRAPDOOR, Palettes.BAMBOO_TRAPDOOR, props -> new TrapDoorBlock(BlockSetType.BAMBOO, props));
-    public static final Pair<ChippedPaletteRegistry, ChippedPaletteRegistry> TORCH = createTorchRegistry(Blocks.TORCH, Blocks.WALL_TORCH, Palettes.TORCH, TorchBlock::new, WallTorchBlock::new);
 
     public static final ChippedPaletteRegistry GLASS = createRegistry(Blocks.GLASS, Palettes.GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
     public static final ChippedPaletteRegistry GLASS_PANE = createRegistry(Blocks.GLASS_PANE, Palettes.GLASS_PANE, IronBarsBlock::new);
@@ -247,6 +241,7 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry RED_CARPET = createRegistry(Blocks.RED_CARPET, Palettes.CARPET, CarpetBlock::new);
     public static final ChippedPaletteRegistry WHITE_CARPET = createRegistry(Blocks.WHITE_CARPET, Palettes.CARPET, CarpetBlock::new);
     public static final ChippedPaletteRegistry YELLOW_CARPET = createRegistry(Blocks.YELLOW_CARPET, Palettes.CARPET, CarpetBlock::new);
+
     public static final ChippedPaletteRegistry ANCIENT_DEBRIS = createRegistry(Blocks.ANCIENT_DEBRIS, Palettes.STONE);
     public static final ChippedPaletteRegistry ANDESITE = createRegistry(Blocks.ANDESITE, Palettes.STONE);
     public static final ChippedPaletteRegistry BASALT = createRegistry(Blocks.BASALT, Palettes.BASALT);
@@ -278,6 +273,7 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry STONE = createRegistry(Blocks.STONE, Palettes.BASE_STONE);
     public static final ChippedPaletteRegistry SMOOTH_STONE = createRegistry(Blocks.SMOOTH_STONE, Palettes.STONE);
     public static final ChippedPaletteRegistry TUFF = createRegistry(Blocks.TUFF, Palettes.STONE);
+
     public static final ChippedPaletteRegistry TERRACOTTA = createRegistry(Blocks.TERRACOTTA, Palettes.TERRACOTTA);
     public static final ChippedPaletteRegistry BLACK_TERRACOTTA = createRegistry(Blocks.BLACK_TERRACOTTA, Palettes.TERRACOTTA);
     public static final ChippedPaletteRegistry BLUE_TERRACOTTA = createRegistry(Blocks.BLUE_TERRACOTTA, Palettes.TERRACOTTA);
@@ -295,6 +291,7 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry RED_TERRACOTTA = createRegistry(Blocks.RED_TERRACOTTA, Palettes.TERRACOTTA);
     public static final ChippedPaletteRegistry WHITE_TERRACOTTA = createRegistry(Blocks.WHITE_TERRACOTTA, Palettes.TERRACOTTA);
     public static final ChippedPaletteRegistry YELLOW_TERRACOTTA = createRegistry(Blocks.YELLOW_TERRACOTTA, Palettes.TERRACOTTA);
+
     public static final ChippedPaletteRegistry BLACK_GLAZED_TERRACOTTA = createRegistry(Blocks.BLACK_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
     public static final ChippedPaletteRegistry BLUE_GLAZED_TERRACOTTA = createRegistry(Blocks.BLUE_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
     public static final ChippedPaletteRegistry BROWN_GLAZED_TERRACOTTA = createRegistry(Blocks.BROWN_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
@@ -311,6 +308,7 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry RED_GLAZED_TERRACOTTA = createRegistry(Blocks.RED_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
     public static final ChippedPaletteRegistry WHITE_GLAZED_TERRACOTTA = createRegistry(Blocks.WHITE_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
     public static final ChippedPaletteRegistry YELLOW_GLAZED_TERRACOTTA = createRegistry(Blocks.YELLOW_GLAZED_TERRACOTTA, Palettes.GLAZED_TERRACOTTA, GlazedTerracottaBlock::new);
+
     public static final ChippedPaletteRegistry BLACK_CONCRETE = createRegistry(Blocks.BLACK_CONCRETE, Palettes.CONCRETE);
     public static final ChippedPaletteRegistry BLUE_CONCRETE = createRegistry(Blocks.BLUE_CONCRETE, Palettes.CONCRETE);
     public static final ChippedPaletteRegistry BROWN_CONCRETE = createRegistry(Blocks.BROWN_CONCRETE, Palettes.CONCRETE);
@@ -341,7 +339,6 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry SOUL_LANTERN = createRegistry(Blocks.SOUL_LANTERN, Palettes.SOUL_LANTERN, LanternBlock::new);
     public static final ChippedPaletteRegistry SPECIAL_LANTERN = registerSpecialLanterns("special_lantern", Palettes.SPECIAL_LANTERN);
     public static final ChippedPaletteRegistry SPECIAL_SOUL_LANTERN = registerSpecialLanterns("special_soul_lantern", Palettes.SPECIAL_SOUL_LANTERN);
-    public static final Pair<ChippedPaletteRegistry, ChippedPaletteRegistry> REDSTONE_TORCH = createTorchRegistry(Blocks.REDSTONE_TORCH, Blocks.REDSTONE_WALL_TORCH, Palettes.REDSTONE_TORCH, (o, p) -> new RedstoneTorchBlock(p), (o, p) -> new RedstoneWallTorchBlock(p));
 
     public static ChippedPaletteRegistry createRegistry(Block ref, Palette palette) {
         return createRegistry(ref, palette, DEFAULT_CREATOR);
@@ -370,24 +367,6 @@ public class ModBlocks {
         }
         ModItems.createItemRegistry(registry, itemType);
         return registry;
-    }
-
-    public static Pair<ChippedPaletteRegistry, ChippedPaletteRegistry> createTorchRegistry(Block ref1, Block ref2, Palette palette, BiFunction<SimpleParticleType, BlockBehaviour.Properties, Block> blockType1, BiFunction<SimpleParticleType, BlockBehaviour.Properties, Block> blockType2) {
-        var registry1 = new ChippedPaletteRegistry(BLOCKS, ref1, palette);
-        var registry2 = new ChippedPaletteRegistry(BLOCKS, ref2, palette);
-        var itemRegistry = ResourcefulRegistries.createForItems(ModItems.ITEMS);
-
-        for (String s : palette) {
-            String id1 = s.replace("%", BuiltInRegistries.BLOCK.getKey(ref1).getPath().toLowerCase(Locale.ROOT));
-            RegistryEntry<Block> torch1 = registry1.register(id1, (properties) -> blockType1.apply(ParticleTypes.FLAME, properties), () -> createProperties(ref1));
-
-            String id2 = s.replace("%", BuiltInRegistries.BLOCK.getKey(ref2).getPath().toLowerCase(Locale.ROOT));
-            RegistryEntry<Block> torch2 = registry2.register(id2, (properties) -> blockType2.apply(ParticleTypes.FLAME, properties), () -> createProperties(ref2));
-
-            itemRegistry.register(torch1.getId().getPath(), (properties) -> new StandingAndWallBlockItem(torch1.get(), torch2.get(), Direction.DOWN, properties), Item.Properties::new);
-        }
-
-        return Pair.of(registry1, registry2);
     }
 
     public static ChippedPaletteRegistry registerSpecialLanterns(String block, Palette palette) {

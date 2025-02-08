@@ -1,11 +1,10 @@
-// import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-// import groovy.json.StringEscapeUtils
+import groovy.json.StringEscapeUtils
 
 plugins {
     `maven-publish`
     idea
-    // id("com.teamresourceful.resourcefulgradle") version "0.0.+"
-    id("earth.terrarium.cloche") version "0.7.+"
+    id("com.teamresourceful.resourcefulgradle") version "0.0.+"
+    id("earth.terrarium.cloche") version "0.7.12"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -86,19 +85,18 @@ cloche {
         mixins.from(file("src/common/main/chipped.mixins.json"))
 
         dependencies {
-            modCompileOnly(
-                group = "com.teamresourceful.resourcefullib",
+            modCompileOnly(module(group = "com.teamresourceful.resourcefullib",
                 name = "resourcefullib-common-1.21.4",
-                version = resourcefulLibVersion
-            )
+                version = resourcefulLibVersion))
 
-            modCompileOnly(group = "earth.terrarium.athena", name = "athena-common-1.21.4", version = athenaVersion) {
+            modCompileOnly(module(group = "earth.terrarium.athena", name = "athena-common-1.21.4", version = athenaVersion)) {
                 exclude(group = "net.fabricmc", module = "fabric-loader")
             }
 
-            modApi(group = "mezz.jei", name = "jei-1.21.1-common-api", version = jeiVersion)
-            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-api", version = reiVersion)
-            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-default-plugin", version = reiVersion)
+            // TODO PUT THESE IN THEIR OWN SOURCE SET THEY ARE POISON
+            modApi(module(group = "mezz.jei", name = "jei-1.21.1-common-api", version = jeiVersion))
+            modCompileOnly(module(group = "me.shedaniel", name = "RoughlyEnoughItems-api", version = reiVersion))
+            modCompileOnly(module(group = "me.shedaniel", name = "RoughlyEnoughItems-default-plugin", version = reiVersion))
         }
     }
 
@@ -109,14 +107,24 @@ cloche {
 
         loaderVersion = fabricLoaderVersion
 
-        client()
-        server()
         data()
+
+        client {
+            data()
+        }
+
+        runs {
+            server()
+            client()
+
+            data()
+            clientData()
+        }
 
         dependencies {
             fabricApi("$fabricApiVersion+$_minecraftVersion")
 
-            modApi(group = "com.terraformersmc", name = "modmenu", version = modMenuVersion)
+            modApi(module(group = "com.terraformersmc", name = "modmenu", version = modMenuVersion))
         }
 
         metadata {
@@ -132,29 +140,36 @@ cloche {
 
         loaderVersion = neoforgeVersion
 
-        client()
-        server()
         data()
 
-        metadata {
-            // TODO remove when fixed
-            blurLogo = true
+        runs {
+            server()
+            client()
+
+            data()
+            clientData()
         }
     }
 
     targets.all {
         dependencies {
-            modApi(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$loaderName-1.21.4", version = resourcefulLibVersion)
-            modApi(group = "earth.terrarium.athena", name = "athena-$loaderName-1.21.4", version = athenaVersion)
+            modApi(module(group = "com.teamresourceful.resourcefullib", name = "resourcefullib-$loaderName-1.21.4", version = resourcefulLibVersion))
+            modApi(module(group = "earth.terrarium.athena", name = "athena-$loaderName-1.21.4", version = athenaVersion))
 
-            modCompileOnly(group = "me.shedaniel", name = "RoughlyEnoughItems-api-$loaderName", version = reiVersion)
+            modCompileOnly(module(group = "me.shedaniel", name = "RoughlyEnoughItems-api-$loaderName", version = reiVersion))
 
-            modCompileOnly(
+            modCompileOnly(module(
                 group = "me.shedaniel",
                 name = "RoughlyEnoughItems-default-plugin-$loaderName",
                 version = reiVersion
-            )
+            ))
         }
+    }
+}
+
+sourceSets.named("neoforge") {
+    tasks.named<ProcessResources>(processResourcesTaskName) {
+        from("build/generated/resources/neoforge/neoforge")
     }
 }
 
@@ -190,6 +205,27 @@ publishing {
                 username = System.getenv("MAVEN_USER")
                 password = System.getenv("MAVEN_PASS")
             }
+        }
+    }
+}
+
+resourcefulGradle {
+    templates {
+        register("embed") {
+            val minecraftVersion: String by project
+            val version: String by project
+            val changelog: String = file("changelog.md").readText(Charsets.UTF_8)
+            val fabricLink: String? = System.getenv("FABRIC_RELEASE_URL")
+            val forgeLink: String? = System.getenv("FORGE_RELEASE_URL")
+
+            source = file("templates/embed.json.template")
+            injectedValues = mapOf(
+                "minecraft" to minecraftVersion,
+                "version" to version,
+                "changelog" to StringEscapeUtils.escapeJava(changelog),
+                "fabric_link" to fabricLink,
+                "forge_link" to forgeLink,
+            )
         }
     }
 }
@@ -296,24 +332,4 @@ publishing {
         }
     }
 }
-
-resourcefulGradle {
-    templates {
-        register("embed") {
-            val minecraftVersion: String by project
-            val version: String by project
-            val changelog: String = file("changelog.md").readText(Charsets.UTF_8)
-            val fabricLink: String? = System.getenv("FABRIC_RELEASE_URL")
-            val forgeLink: String? = System.getenv("FORGE_RELEASE_URL")
-
-            source.set(file("templates/embed.json.template"))
-            injectedValues.set(mapOf(
-                    "minecraft" to minecraftVersion,
-                    "version" to version,
-                    "changelog" to StringEscapeUtils.escapeJava(changelog),
-                    "fabric_link" to fabricLink,
-                    "forge_link" to forgeLink,
-            ))
-        }
-    }
-}*/
+ */

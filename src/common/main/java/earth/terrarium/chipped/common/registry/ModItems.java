@@ -44,7 +44,10 @@ public class ModItems {
 
     public static void createItemRegistry(ResourcefulRegistry<Block> blocks, BiFunction<Block, Item.Properties, BlockItem> itemType) {
         var registry = ResourcefulRegistries.createForItems(ModItems.ITEMS);
-        blocks.stream().forEach(block ->
-            registry.register(block.getId().getPath(), (properties) -> itemType.apply(block.get(), properties), Item.Properties::new));
+        blocks.stream().forEach(block -> registry.register(
+            block.getId().getPath(),
+            (properties) -> itemType.apply(block.get(), properties),
+            () -> new Item.Properties().useBlockDescriptionPrefix()
+        ));
     }
 }

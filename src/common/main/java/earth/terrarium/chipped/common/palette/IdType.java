@@ -56,9 +56,12 @@ public enum IdType {
     }
 
     public void addTextureInfo(JsonObject json) {
-        if (this == GIANT) {
-            json.addProperty("width", 2);
-            json.addProperty("height", 2);
+        switch (this) {
+            case GIANT -> {
+                json.addProperty("width", 2);
+                json.addProperty("height", 2);
+            }
+            case PANE_CTM -> json.addProperty("connect_corners", true);
         }
     }
 
