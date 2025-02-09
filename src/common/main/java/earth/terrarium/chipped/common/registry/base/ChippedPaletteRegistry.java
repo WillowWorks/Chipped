@@ -8,7 +8,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChippedPaletteRegistry extends ResourcefulBlockRegistry {
+
+    public static final List<ChippedPaletteRegistry> REGISTRIES = new ArrayList<>();
 
     private final Block parent;
     private final Block base;
@@ -30,6 +35,8 @@ public class ChippedPaletteRegistry extends ResourcefulBlockRegistry {
         this.base = base;
         this.palette = palette;
         this.customBase = customBase;
+
+        REGISTRIES.add(this);
     }
 
     public Block getBase() {

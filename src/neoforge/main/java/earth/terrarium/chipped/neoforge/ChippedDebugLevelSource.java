@@ -2,15 +2,13 @@ package earth.terrarium.chipped.neoforge;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import earth.terrarium.chipped.common.blocks.WorkbenchBlock;
-import earth.terrarium.chipped.common.registry.ModBlocks;
+import earth.terrarium.chipped.common.registry.base.ChippedPaletteRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.WorldGenRegion;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -18,11 +16,9 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -39,20 +35,18 @@ public class ChippedDebugLevelSource extends ChunkGenerator {
         RegistryOps.retrieveElement(Biomes.PLAINS)
     ).apply(instance, ChippedDebugLevelSource::new));
 
-    private final List<BlockState> states;
-    private final int gridWidth;
-    private final int gridHeight;
+    private final List<Entry> states;
 
     public ChippedDebugLevelSource(Holder.Reference<Biome> biome) {
         super(new FixedBiomeSource(biome));
 
-        this.states = ModBlocks.BLOCKS.boundStream()
-            .filter(block -> !(block instanceof WorkbenchBlock))
-            .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
-            .filter(ChippedDebugLevelSource::isAllowedState)
+        this.states = ChippedPaletteRegistry.REGISTRIES.stream()
+            .map(registry -> new Entry(registry, registry.boundStream()
+                .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
+                .filter(ChippedDebugLevelSource::isAllowedState)
+                .toList())
+            )
             .toList();
-        this.gridWidth = Mth.ceil(Mth.sqrt(this.states.size()));
-        this.gridHeight = Mth.ceil((float)this.states.size() / (float)this.gridWidth);
     }
 
     @Override
@@ -119,24 +113,22 @@ public class ChippedDebugLevelSource extends ChunkGenerator {
     // endregion
 
     private BlockState getBlockstateAt(int x, int z) {
-        BlockState blockstate = Blocks.AIR.defaultBlockState();
         if (x > 0 && z > 0 && x % 2 != 0 && z % 2 != 0) {
             x /= 2;
             z /= 2;
-            if (x <= this.gridWidth && z <= this.gridHeight) {
-                int i = Mth.abs(x * this.gridWidth + z);
-                if (i < this.states.size()) {
-                    blockstate = this.states.get(i);
-                }
+
+            if (z < this.states.size()) {
+                return this.states.get(z).get(x);
             }
         }
-
-        return blockstate;
+        return Blocks.AIR.defaultBlockState();
     }
 
     private static void setBlock(WorldGenLevel level, BlockPos pos, BlockState state) {
         int flag = Block.UPDATE_CLIENTS;
         level.setBlock(pos, state, flag);
+        if (pos.getX() == 0) return;
+
         if (state.hasProperty(BlockStateProperties.AXIS) && state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
             level.setBlock(pos.above(), state, flag);
             level.setBlock(pos.above(2), state, flag);
@@ -149,5 +141,15 @@ public class ChippedDebugLevelSource extends ChunkGenerator {
         if (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED)) return false;
         if (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) return false;
         return true;
+    }
+
+    private record Entry(ChippedPaletteRegistry registry, List<BlockState> states) {
+
+        public BlockState get(int index) {
+            if (index < 0) return Blocks.AIR.defaultBlockState();
+            if (index > this.states.size()) return Blocks.AIR.defaultBlockState();
+
+            return index == 0 ? this.registry.getBase().defaultBlockState() : this.states.get(index - 1);
+        }
     }
 }
