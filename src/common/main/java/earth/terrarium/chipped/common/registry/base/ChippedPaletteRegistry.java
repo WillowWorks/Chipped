@@ -10,17 +10,23 @@ import org.jetbrains.annotations.Nullable;
 
 public class ChippedPaletteRegistry extends ResourcefulBlockRegistry {
 
+    private final Block parent;
     private final Block base;
     private final Palette palette;
     @Nullable
     private final String customBase;
 
     public ChippedPaletteRegistry(ResourcefulRegistry<Block> registry, Block base, Palette palette) {
-        this(registry, base, null, palette);
+        this(registry, base, base, palette);
     }
 
-    public ChippedPaletteRegistry(ResourcefulRegistry<Block> registry, Block base, @Nullable String customBase, Palette palette) {
+    public ChippedPaletteRegistry(ResourcefulRegistry<Block> registry, Block parent, Block base, Palette palette) {
+        this(registry, parent, base, null, palette);
+    }
+
+    public ChippedPaletteRegistry(ResourcefulRegistry<Block> registry, Block parent, Block base, @Nullable String customBase, Palette palette) {
         super(ResourcefulRegistries.create(registry));
+        this.parent = parent;
         this.base = base;
         this.palette = palette;
         this.customBase = customBase;
@@ -33,6 +39,11 @@ public class ChippedPaletteRegistry extends ResourcefulBlockRegistry {
     public String getBasePath() {
         if (this.customBase != null) return this.customBase;
         return BuiltInRegistries.BLOCK.getKey(this.base).getPath();
+    }
+
+    public String getRootPath() {
+        if (this.customBase != null) return this.customBase;
+        return BuiltInRegistries.BLOCK.getKey(this.parent).getPath();
     }
 
     public Palette getPalette() {

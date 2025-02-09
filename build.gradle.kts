@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     idea
     id("com.teamresourceful.resourcefulgradle") version "0.0.+"
-    id("earth.terrarium.cloche") version "0.7.12"
+    id("earth.terrarium.cloche") version "0.7.15"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -164,12 +164,6 @@ cloche {
                 version = reiVersion
             ))
         }
-    }
-}
-
-sourceSets.named("neoforge") {
-    tasks.named<ProcessResources>(processResourcesTaskName) {
-        from("build/generated/resources/neoforge/neoforge")
     }
 }
 

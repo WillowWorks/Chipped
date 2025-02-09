@@ -5,7 +5,7 @@ import earth.terrarium.chipped.datagen.provider.MinifiedProvider;
 import earth.terrarium.chipped.datagen.provider.client.ModAthenaDefinitionProvider;
 import earth.terrarium.chipped.datagen.provider.client.ModCtmTextureProvider;
 import earth.terrarium.chipped.datagen.provider.client.ModLangProvider;
-import earth.terrarium.chipped.datagen.provider.client.ModModelProvider;
+import earth.terrarium.chipped.datagen.provider.client.models.ModModelProvider;
 import earth.terrarium.chipped.datagen.provider.server.ModBlockTagProvider;
 import earth.terrarium.chipped.datagen.provider.server.ModItemTagProvider;
 import earth.terrarium.chipped.datagen.provider.server.ModLootTableProvider;

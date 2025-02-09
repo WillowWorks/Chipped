@@ -200,10 +200,12 @@ public class ModAthenaDefinitionProvider implements DataProvider {
 
         for (ChippedPaletteRegistry registry : this.registries) {
             final String id = registry.getBasePath();
+            final String root = registry.getRootPath();
             for (var entry : registry.getPalette().getSpecial()) {
                 var type = entry.getFirst();
                 var loader = type.id();
                 var blockid = entry.getSecond().replace("%", id);
+                var rootblockid = entry.getSecond().replace("%", root);
 
                 var path = this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK)
                     .resolve(registry.namespace())
@@ -213,15 +215,11 @@ public class ModAthenaDefinitionProvider implements DataProvider {
                 JsonObject json = new JsonObject();
                 JsonObject textures = new JsonObject();
 
-                // TODO - this is awful and is a temporary fix and should be removed and replaced with a proper solution and not a hack and a half and a half and a half and a half
-                var badId = id.replaceAll("_pane$", "");
-                var badBlockid = entry.getSecond().replace("%", badId);
-
-                textures.addProperty("particle", "chipped:block/%s/%s".formatted(badId, badBlockid));
+                textures.addProperty("particle", "chipped:block/%s/%s".formatted(root, rootblockid));
                 String suffix = !type.suffix().isEmpty() ? "_" + type.suffix() : "";
 
                 for (var textureId : type.getTextureIds()) {
-                    String location = "%s:block/%s/ctm/%s/%s".formatted(Chipped.MOD_ID, badId, badBlockid + suffix, textureId.keyInt());
+                    String location = "%s:block/%s/ctm/%s/%s".formatted(Chipped.MOD_ID, root, rootblockid + suffix, textureId.keyInt());
                     textures.addProperty(textureId.value(), this.textures.getTexture(location));
                 }
                 type.addTextureInfo(json);

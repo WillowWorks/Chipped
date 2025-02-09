@@ -175,39 +175,39 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry BAMBOO_TRAPDOOR = createRegistry(Blocks.BAMBOO_TRAPDOOR, Palettes.BAMBOO_TRAPDOOR, props -> new TrapDoorBlock(BlockSetType.BAMBOO, props));
 
     public static final ChippedPaletteRegistry GLASS = createRegistry(Blocks.GLASS, Palettes.GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry GLASS_PANE = createRegistry(Blocks.GLASS_PANE, Palettes.GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry GLASS_PANE = createRegistry(Blocks.GLASS_PANE, Blocks.GLASS, Palettes.GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry BLACK_STAINED_GLASS = createRegistry(Blocks.BLACK_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry BLACK_STAINED_GLASS_PANE = createRegistry(Blocks.BLACK_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry BLACK_STAINED_GLASS_PANE = createRegistry(Blocks.BLACK_STAINED_GLASS_PANE, Blocks.BLACK_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry BLUE_STAINED_GLASS = createRegistry(Blocks.BLUE_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry BLUE_STAINED_GLASS_PANE = createRegistry(Blocks.BLUE_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry BLUE_STAINED_GLASS_PANE = createRegistry(Blocks.BLUE_STAINED_GLASS_PANE, Blocks.BLUE_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry BROWN_STAINED_GLASS = createRegistry(Blocks.BROWN_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry BROWN_STAINED_GLASS_PANE = createRegistry(Blocks.BROWN_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry BROWN_STAINED_GLASS_PANE = createRegistry(Blocks.BROWN_STAINED_GLASS_PANE, Blocks.BROWN_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry CYAN_STAINED_GLASS = createRegistry(Blocks.CYAN_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry CYAN_STAINED_GLASS_PANE = createRegistry(Blocks.CYAN_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry CYAN_STAINED_GLASS_PANE = createRegistry(Blocks.CYAN_STAINED_GLASS_PANE, Blocks.CYAN_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry GRAY_STAINED_GLASS = createRegistry(Blocks.GRAY_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry GRAY_STAINED_GLASS_PANE = createRegistry(Blocks.GRAY_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry GRAY_STAINED_GLASS_PANE = createRegistry(Blocks.GRAY_STAINED_GLASS_PANE, Blocks.GRAY_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry GREEN_STAINED_GLASS = createRegistry(Blocks.GREEN_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry GREEN_STAINED_GLASS_PANE = createRegistry(Blocks.GREEN_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry GREEN_STAINED_GLASS_PANE = createRegistry(Blocks.GREEN_STAINED_GLASS_PANE, Blocks.GREEN_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry LIGHT_BLUE_STAINED_GLASS = createRegistry(Blocks.LIGHT_BLUE_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry LIGHT_BLUE_STAINED_GLASS_PANE = createRegistry(Blocks.LIGHT_BLUE_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry LIGHT_BLUE_STAINED_GLASS_PANE = createRegistry(Blocks.LIGHT_BLUE_STAINED_GLASS_PANE, Blocks.LIGHT_BLUE_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry LIGHT_GRAY_STAINED_GLASS = createRegistry(Blocks.LIGHT_GRAY_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry LIGHT_GRAY_STAINED_GLASS_PANE = createRegistry(Blocks.LIGHT_GRAY_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry LIGHT_GRAY_STAINED_GLASS_PANE = createRegistry(Blocks.LIGHT_GRAY_STAINED_GLASS_PANE, Blocks.LIGHT_GRAY_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry LIME_STAINED_GLASS = createRegistry(Blocks.LIME_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry LIME_STAINED_GLASS_PANE = createRegistry(Blocks.LIME_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry LIME_STAINED_GLASS_PANE = createRegistry(Blocks.LIME_STAINED_GLASS_PANE, Blocks.LIME_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry MAGENTA_STAINED_GLASS = createRegistry(Blocks.MAGENTA_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry MAGENTA_STAINED_GLASS_PANE = createRegistry(Blocks.MAGENTA_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry MAGENTA_STAINED_GLASS_PANE = createRegistry(Blocks.MAGENTA_STAINED_GLASS_PANE, Blocks.MAGENTA_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry ORANGE_STAINED_GLASS = createRegistry(Blocks.ORANGE_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry ORANGE_STAINED_GLASS_PANE = createRegistry(Blocks.ORANGE_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry ORANGE_STAINED_GLASS_PANE = createRegistry(Blocks.ORANGE_STAINED_GLASS_PANE, Blocks.ORANGE_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry PINK_STAINED_GLASS = createRegistry(Blocks.PINK_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry PINK_STAINED_GLASS_PANE = createRegistry(Blocks.PINK_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry PINK_STAINED_GLASS_PANE = createRegistry(Blocks.PINK_STAINED_GLASS_PANE, Blocks.PINK_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry PURPLE_STAINED_GLASS = createRegistry(Blocks.PURPLE_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry PURPLE_STAINED_GLASS_PANE = createRegistry(Blocks.PURPLE_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry PURPLE_STAINED_GLASS_PANE = createRegistry(Blocks.PURPLE_STAINED_GLASS_PANE, Blocks.PURPLE_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry RED_STAINED_GLASS = createRegistry(Blocks.RED_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry RED_STAINED_GLASS_PANE = createRegistry(Blocks.RED_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry RED_STAINED_GLASS_PANE = createRegistry(Blocks.RED_STAINED_GLASS_PANE, Blocks.RED_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry WHITE_STAINED_GLASS = createRegistry(Blocks.WHITE_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry WHITE_STAINED_GLASS_PANE = createRegistry(Blocks.WHITE_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry WHITE_STAINED_GLASS_PANE = createRegistry(Blocks.WHITE_STAINED_GLASS_PANE, Blocks.WHITE_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
     public static final ChippedPaletteRegistry YELLOW_STAINED_GLASS = createRegistry(Blocks.YELLOW_STAINED_GLASS, Palettes.STAINED_GLASS, p -> new TransparentBlock(p.isValidSpawn(ModBlocks::never)) {});
-    public static final ChippedPaletteRegistry YELLOW_STAINED_GLASS_PANE = createRegistry(Blocks.YELLOW_STAINED_GLASS_PANE, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
+    public static final ChippedPaletteRegistry YELLOW_STAINED_GLASS_PANE = createRegistry(Blocks.YELLOW_STAINED_GLASS_PANE, Blocks.YELLOW_STAINED_GLASS, Palettes.STAINED_GLASS_PANE, IronBarsBlock::new);
 
     public static final ChippedPaletteRegistry BLACK_WOOL = createRegistry(Blocks.BLACK_WOOL, Palettes.WOOL);
     public static final ChippedPaletteRegistry BLUE_WOOL = createRegistry(Blocks.BLUE_WOOL, Palettes.WOOL);
@@ -225,22 +225,23 @@ public class ModBlocks {
     public static final ChippedPaletteRegistry RED_WOOL = createRegistry(Blocks.RED_WOOL, Palettes.WOOL);
     public static final ChippedPaletteRegistry WHITE_WOOL = createRegistry(Blocks.WHITE_WOOL, Palettes.WOOL);
     public static final ChippedPaletteRegistry YELLOW_WOOL = createRegistry(Blocks.YELLOW_WOOL, Palettes.WOOL);
-    public static final ChippedPaletteRegistry BLACK_CARPET = createRegistry(Blocks.BLACK_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry BLUE_CARPET = createRegistry(Blocks.BLUE_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry BROWN_CARPET = createRegistry(Blocks.BROWN_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry CYAN_CARPET = createRegistry(Blocks.CYAN_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry GRAY_CARPET = createRegistry(Blocks.GRAY_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry GREEN_CARPET = createRegistry(Blocks.GREEN_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry LIGHT_BLUE_CARPET = createRegistry(Blocks.LIGHT_BLUE_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry LIGHT_GRAY_CARPET = createRegistry(Blocks.LIGHT_GRAY_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry LIME_CARPET = createRegistry(Blocks.LIME_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry MAGENTA_CARPET = createRegistry(Blocks.MAGENTA_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry ORANGE_CARPET = createRegistry(Blocks.ORANGE_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry PINK_CARPET = createRegistry(Blocks.PINK_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry PURPLE_CARPET = createRegistry(Blocks.PURPLE_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry RED_CARPET = createRegistry(Blocks.RED_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry WHITE_CARPET = createRegistry(Blocks.WHITE_CARPET, Palettes.CARPET, CarpetBlock::new);
-    public static final ChippedPaletteRegistry YELLOW_CARPET = createRegistry(Blocks.YELLOW_CARPET, Palettes.CARPET, CarpetBlock::new);
+
+    public static final ChippedPaletteRegistry BLACK_CARPET = createRegistry(Blocks.BLACK_CARPET, Blocks.BLACK_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry BLUE_CARPET = createRegistry(Blocks.BLUE_CARPET, Blocks.BLUE_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry BROWN_CARPET = createRegistry(Blocks.BROWN_CARPET, Blocks.BROWN_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry CYAN_CARPET = createRegistry(Blocks.CYAN_CARPET, Blocks.CYAN_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry GRAY_CARPET = createRegistry(Blocks.GRAY_CARPET, Blocks.GRAY_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry GREEN_CARPET = createRegistry(Blocks.GREEN_CARPET, Blocks.GREEN_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry LIGHT_BLUE_CARPET = createRegistry(Blocks.LIGHT_BLUE_CARPET, Blocks.LIGHT_BLUE_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry LIGHT_GRAY_CARPET = createRegistry(Blocks.LIGHT_GRAY_CARPET, Blocks.LIGHT_GRAY_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry LIME_CARPET = createRegistry(Blocks.LIME_CARPET, Blocks.LIME_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry MAGENTA_CARPET = createRegistry(Blocks.MAGENTA_CARPET, Blocks.MAGENTA_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry ORANGE_CARPET = createRegistry(Blocks.ORANGE_CARPET, Blocks.ORANGE_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry PINK_CARPET = createRegistry(Blocks.PINK_CARPET, Blocks.PINK_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry PURPLE_CARPET = createRegistry(Blocks.PURPLE_CARPET, Blocks.PURPLE_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry RED_CARPET = createRegistry(Blocks.RED_CARPET, Blocks.RED_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry WHITE_CARPET = createRegistry(Blocks.WHITE_CARPET, Blocks.WHITE_WOOL, Palettes.CARPET, CarpetBlock::new);
+    public static final ChippedPaletteRegistry YELLOW_CARPET = createRegistry(Blocks.YELLOW_CARPET, Blocks.YELLOW_WOOL, Palettes.CARPET, CarpetBlock::new);
 
     public static final ChippedPaletteRegistry ANCIENT_DEBRIS = createRegistry(Blocks.ANCIENT_DEBRIS, Palettes.STONE);
     public static final ChippedPaletteRegistry ANDESITE = createRegistry(Blocks.ANDESITE, Palettes.STONE);
@@ -348,8 +349,22 @@ public class ModBlocks {
         return createRegistry(ref, palette, blockType, BlockItem::new);
     }
 
+    public static ChippedPaletteRegistry createRegistry(Block ref, Block parent, Palette palette, Function<BlockBehaviour.Properties, Block> blockType) {
+        return createRegistry(ref, parent, palette, blockType, BlockItem::new);
+    }
+
     public static ChippedPaletteRegistry createRegistry(Block ref, Palette palette, Function<BlockBehaviour.Properties, Block> blockType, BiFunction<Block, Item.Properties, BlockItem> itemType) {
-        var registry = new ChippedPaletteRegistry(BLOCKS, ref, palette);
+        return createRegistry(ref, ref, palette, blockType, itemType);
+    }
+
+    public static ChippedPaletteRegistry createRegistry(
+        Block ref,
+        Block parent,
+        Palette palette,
+        Function<BlockBehaviour.Properties, Block> blockType,
+        BiFunction<Block, Item.Properties, BlockItem> itemType
+    ) {
+        var registry = new ChippedPaletteRegistry(BLOCKS, parent, ref, palette);
         for (var entry : palette.ids()) {
             String id = entry.getSecond().replace("%", BuiltInRegistries.BLOCK.getKey(ref).getPath().toLowerCase(Locale.ROOT));
             IdType type = Objects.requireNonNull(entry.getFirst());
@@ -380,7 +395,7 @@ public class ModBlocks {
     }
 
     public static ChippedPaletteRegistry registerBorderlessBricks(String block, Palette palette) {
-        var registry = new ChippedPaletteRegistry(BLOCKS, Blocks.BRICKS, block, palette);
+        var registry = new ChippedPaletteRegistry(BLOCKS, Blocks.BRICKS, Blocks.BRICKS, block, palette);
         for (var entry : palette.ids()) {
             String id = entry.getSecond().replace("%", block);
             if (Objects.requireNonNull(entry.getFirst()) == IdType.PILLAR) {
