@@ -97,7 +97,8 @@ public class ModBlockRegistries {
     );
 
     public static final Iterable<ChippedPaletteRegistry> FULL_BLOCKS = Iterables.concat(
-        WOOL, CONCRETE, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE
+        WOOL, CONCRETE, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE,
+        List.of(ModBlocks.BRICKS, ModBlocks.BORDERLESS_BRICKS, ModBlocks.MUD, ModBlocks.MUD_BRICKS, ModBlocks.PACKED_MUD)
     );
 
 }

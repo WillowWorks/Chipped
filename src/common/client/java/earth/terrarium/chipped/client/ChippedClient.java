@@ -107,10 +107,6 @@ public class ChippedClient {
         createSetRenderType(ModBlocks.CRIMSON_FUNGUS, RenderType.cutout());
         createSetRenderType(ModBlocks.WARPED_FUNGUS, RenderType.cutout());
         createSetRenderType(ModBlocks.POINTED_DRIPSTONE, RenderType.cutout());
-        createSetRenderType(ModBlocks.TORCH.getFirst(), RenderType.cutout());
-        createSetRenderType(ModBlocks.TORCH.getSecond(), RenderType.cutout());
-        createSetRenderType(ModBlocks.REDSTONE_TORCH.getFirst(), RenderType.cutout());
-        createSetRenderType(ModBlocks.REDSTONE_TORCH.getSecond(), RenderType.cutout());
     }
 
     private static void createSetRenderType(ResourcefulRegistry<Block> registry, RenderType type) {

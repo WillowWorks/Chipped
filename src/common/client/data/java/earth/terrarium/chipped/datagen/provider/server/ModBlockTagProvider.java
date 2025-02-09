@@ -161,7 +161,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         registry.register(Blocks.WARPED_TRAPDOOR, ModBlocks.WARPED_TRAPDOOR, "warped_trapdoor", CARPENTERS_TABLE_TAG, BlockTags.MINEABLE_WITH_AXE);
         registry.register(Blocks.CHERRY_TRAPDOOR, ModBlocks.CHERRY_TRAPDOOR, "cherry_trapdoor", CARPENTERS_TABLE_TAG, BlockTags.MINEABLE_WITH_AXE);
         registry.register(Blocks.BAMBOO_TRAPDOOR, ModBlocks.BAMBOO_TRAPDOOR, "bamboo_trapdoor", CARPENTERS_TABLE_TAG, BlockTags.MINEABLE_WITH_AXE);
-        registry.register(Blocks.TORCH, ModBlocks.TORCH.getFirst(), "torch", CARPENTERS_TABLE_TAG);
 
         registry.register(Blocks.GLASS, ModBlocks.GLASS, "glass", GLASSBLOWER_TAG);
         registry.register(Blocks.GLASS_PANE, ModBlocks.GLASS_PANE, "glass_pane", GLASSBLOWER_TAG);
@@ -324,7 +323,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         registry.register(Blocks.SOUL_LANTERN, ModBlocks.SOUL_LANTERN, "soul_lantern", TINKERING_TABLE_TAG, BlockTags.MINEABLE_WITH_PICKAXE);
         registry.register(null, ModBlocks.SPECIAL_LANTERN, "special_lantern", TINKERING_TABLE_TAG, BlockTags.MINEABLE_WITH_PICKAXE);
         registry.register(null, ModBlocks.SPECIAL_SOUL_LANTERN, "special_soul_lantern", TINKERING_TABLE_TAG, BlockTags.MINEABLE_WITH_PICKAXE);
-        registry.register(Blocks.REDSTONE_TORCH, ModBlocks.REDSTONE_TORCH.getFirst(), "redstone_torch", TINKERING_TABLE_TAG);
     }
 
     public static void registerSpecial(SpecialBlockRegistry registry) {
@@ -455,8 +453,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         createVanillaSet(ModBlocks.WARPED_TRAPDOOR, BlockTags.WOODEN_TRAPDOORS);
         createVanillaSet(ModBlocks.CHERRY_TRAPDOOR, BlockTags.WOODEN_TRAPDOORS);
         createVanillaSet(ModBlocks.BAMBOO_TRAPDOOR, BlockTags.WOODEN_TRAPDOORS);
-        createVanillaSet(ModBlocks.TORCH.getFirst(), BlockTags.WALL_POST_OVERRIDE);
-        createVanillaSet(ModBlocks.REDSTONE_TORCH.getFirst(), BlockTags.WALL_POST_OVERRIDE);
         createVanillaSet(ModBlocks.NETHER_WART_BLOCK, BlockTags.WART_BLOCKS);
         createVanillaSet(ModBlocks.WARPED_WART_BLOCK, BlockTags.WART_BLOCKS);
         createVanillaSet(ModBlocks.SOUL_SAND, BlockTags.WITHER_SUMMON_BASE_BLOCKS);

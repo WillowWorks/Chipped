@@ -3,6 +3,7 @@ package earth.terrarium.chipped.datagen.provider.client;
 import earth.terrarium.chipped.common.registry.base.ChippedPaletteRegistry;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +15,14 @@ public class ModTexturedModels {
         return TexturedModel.createDefault(
             block -> TextureMapping.cube(texture(block, name)),
             ModelTemplates.CUBE_ALL
+        );
+    }
+
+    public static TexturedModel.Provider glazedTerracotta(ChippedPaletteRegistry registry) {
+        String name = registry.getBasePath();
+        return TexturedModel.createDefault(
+            block -> TextureMapping.singleSlot(TextureSlot.PATTERN, texture(block, name)),
+            ModelTemplates.GLAZED_TERRACOTTA
         );
     }
 
