@@ -110,13 +110,22 @@ public class ModBlockRegistries {
         ModBlocks.RAW_COPPER_BLOCK, ModBlocks.RAW_IRON_BLOCK, ModBlocks.RAW_GOLD_BLOCK, ModBlocks.ANCIENT_DEBRIS
     );
 
+    public static final Iterable<ChippedPaletteRegistry> LEAVES = List.of(
+        ModBlocks.ACACIA_LEAVES, ModBlocks.BIRCH_LEAVES, ModBlocks.DARK_OAK_LEAVES, ModBlocks.JUNGLE_LEAVES,
+        ModBlocks.OAK_LEAVES, ModBlocks.SPRUCE_LEAVES
+    );
+
+    public static final Iterable<ChippedPaletteRegistry> LIGHTS = List.of(
+        ModBlocks.SHROOMLIGHT, ModBlocks.GLOWSTONE, ModBlocks.REDSTONE_LAMP, ModBlocks.SEA_LANTERN,
+        ModBlocks.OCHRE_FROGLIGHT, ModBlocks.PEARLESCENT_FROGLIGHT, ModBlocks.VERDANT_FROGLIGHT
+    );
+
     public static final Iterable<ChippedPaletteRegistry> FULL_BLOCKS = Iterables.concat(
-        WOOL, CONCRETE, GLAZED_TERRACOTTA, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE, GROUND, MATERIALS, RAW_ORES,
+        WOOL, CONCRETE, GLAZED_TERRACOTTA, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE, GROUND, MATERIALS, RAW_ORES, LEAVES, LIGHTS,
         List.of(ModBlocks.BRICKS, ModBlocks.BORDERLESS_BRICKS, ModBlocks.MUD_BRICKS),
-        List.of(ModBlocks.HAY_BLOCK, ModBlocks.MOSS_BLOCK, ModBlocks.BONE_BLOCK),
+        List.of(ModBlocks.HAY_BLOCK, ModBlocks.MOSS_BLOCK, ModBlocks.BONE_BLOCK, ModBlocks.MANGROVE_ROOTS),
         List.of(ModBlocks.BROWN_MUSHROOM_BLOCK, ModBlocks.RED_MUSHROOM_BLOCK, ModBlocks.MUSHROOM_STEM),
-        List.of(ModBlocks.WARPED_WART_BLOCK, ModBlocks.NETHER_WART_BLOCK),
-        List.of(ModBlocks.SHROOMLIGHT, ModBlocks.GLOWSTONE, ModBlocks.OCHRE_FROGLIGHT, ModBlocks.PEARLESCENT_FROGLIGHT, ModBlocks.VERDANT_FROGLIGHT),
+        List.of(ModBlocks.WARPED_WART_BLOCK, ModBlocks.NETHER_WART_BLOCK, ModBlocks.SOUL_SAND),
         List.of(ModBlocks.SPONGE) // TODO These blocks really shouldn't exist imo - Sophie
     );
 

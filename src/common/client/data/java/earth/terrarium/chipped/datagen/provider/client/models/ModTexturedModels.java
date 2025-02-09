@@ -10,6 +10,14 @@ import net.minecraft.world.level.block.Block;
 
 public class ModTexturedModels {
 
+    public static TexturedModel.Provider cube(ChippedPaletteRegistry registry, String suffix) {
+        String name = registry.getBasePath();
+        return TexturedModel.createDefault(
+            block -> TextureMapping.cube(texture(block, name).withSuffix(suffix)),
+            ModelTemplates.CUBE_ALL
+        );
+    }
+
     public static TexturedModel.Provider cube(ChippedPaletteRegistry registry) {
         String name = registry.getBasePath();
         return TexturedModel.createDefault(

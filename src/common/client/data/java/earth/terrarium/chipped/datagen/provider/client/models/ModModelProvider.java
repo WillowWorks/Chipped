@@ -48,6 +48,7 @@ public class ModModelProvider extends ModelProvider {
         ModBlockRegistries.GLASS_PANE.forEach(this::createSet);
 
         createColumnSet(ModBlocks.DRIED_KELP_BLOCK, null);
+        createColumnSet(ModBlocks.MELON, null);
         createColumnSet(ModBlocks.BOOKSHELF, ResourceLocation.withDefaultNamespace("block/oak_planks"));
     }
 

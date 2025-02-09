@@ -1,15 +1,13 @@
 package earth.terrarium.chipped.datagen.provider.client.models;
 
 import earth.terrarium.chipped.common.registry.base.ChippedPaletteRegistry;
-import net.minecraft.client.data.models.blockstates.BlockStateGenerator;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
+import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.RedstoneLampBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -27,6 +25,7 @@ public class ModelGenerator {
     private static final List<Generator> GENERATORS = List.of(
         Generator.of(BlockStateProperties.HORIZONTAL_FACING, ModelGenerator::rotated),
         Generator.of(BlockStateProperties.AXIS, ModelGenerator::column),
+        Generator.of(state -> state.getBlock() instanceof RedstoneLampBlock, ModelGenerator::lamp),
         Generator.of(state -> state.getBlock() instanceof CarpetBlock, create("carpet", ModTexturedModels::carpet)),
         Generator.of(state -> true, create("cube", ModTexturedModels::cube))
     );
@@ -38,6 +37,11 @@ public class ModelGenerator {
     public ModelGenerator(ChippedPaletteRegistry registry, BiConsumer<ResourceLocation, ModelInstance> models) {
         this.registry = registry;
         this.models = models;
+    }
+
+    private ResourceLocation getModel(Block block, String suffix, String name, BiFunction<ChippedPaletteRegistry, String, TexturedModel.Provider> factory) {
+        var provider = this.providers.computeIfAbsent(name + suffix, key -> factory.apply(this.registry, suffix));
+        return provider.createWithSuffix(block, suffix, this.models);
     }
 
     private ResourceLocation getModel(Block block, String name, Function<ChippedPaletteRegistry, TexturedModel.Provider> factory) {
@@ -53,6 +57,12 @@ public class ModelGenerator {
     private BlockStateGenerator column(Block block) {
         var model = getModel(block, "column", ModTexturedModels::column);
         return MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model)).with(ModPropertyDispatches.AXIS);
+    }
+
+    private BlockStateGenerator lamp(Block block) {
+        var off = getModel(block, "cube", ModTexturedModels::cube);
+        var on = getModel(block, "_on", "cube", ModTexturedModels::cube);
+        return MultiVariantGenerator.multiVariant(block).with(ModPropertyDispatches.create(BlockStateProperties.LIT, on, off));
     }
 
     public BlockStateGenerator generate(Block block) {
@@ -72,7 +82,10 @@ public class ModelGenerator {
         };
     }
 
-    private record Generator(Predicate<BlockState> predicate, BiFunction<ModelGenerator, Block, BlockStateGenerator> factory) implements Predicate<BlockState> {
+    private record Generator(
+        Predicate<BlockState> predicate,
+        BiFunction<ModelGenerator, Block, BlockStateGenerator> factory
+    ) implements Predicate<BlockState> {
 
         public static Generator of(Predicate<BlockState> predicate, BiFunction<ModelGenerator, Block, BlockStateGenerator> factory) {
             return new Generator(predicate, factory);
