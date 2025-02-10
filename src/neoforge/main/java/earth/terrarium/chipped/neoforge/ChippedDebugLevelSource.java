@@ -9,6 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -35,18 +36,29 @@ public class ChippedDebugLevelSource extends ChunkGenerator {
         RegistryOps.retrieveElement(Biomes.PLAINS)
     ).apply(instance, ChippedDebugLevelSource::new));
 
-    private final List<Entry> states;
+    private final List<Entry> entries;
+    private final List<BlockState> states;
+
+    private final int gridWidth;
+    private final int gridHeight;
 
     public ChippedDebugLevelSource(Holder.Reference<Biome> biome) {
         super(new FixedBiomeSource(biome));
 
-        this.states = ChippedPaletteRegistry.REGISTRIES.stream()
+        this.entries = ChippedPaletteRegistry.REGISTRIES.stream()
             .map(registry -> new Entry(registry, registry.boundStream()
                 .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
                 .filter(ChippedDebugLevelSource::isAllowedState)
                 .toList())
             )
             .toList();
+
+        this.states = this.entries.stream()
+            .flatMap(entry -> entry.states.stream())
+            .toList();
+
+        this.gridWidth = Mth.ceil(Mth.sqrt(this.states.size()));
+        this.gridHeight = Mth.ceil(this.states.size() / (double) this.gridWidth);
     }
 
     @Override
@@ -117,8 +129,21 @@ public class ChippedDebugLevelSource extends ChunkGenerator {
             x /= 2;
             z /= 2;
 
-            if (z < this.states.size()) {
-                return this.states.get(z).get(x);
+            if (z < this.entries.size()) {
+                return this.entries.get(z).get(x);
+            }
+        } else if (x < 0 && z < 0 && x % 2 != 0 && z % 2 != 0) {
+            x = Math.abs(x);
+            z = Math.abs(z);
+
+            x /= 2;
+            z /= 2;
+
+            if (x <= gridWidth && z <= gridHeight) {
+                int i = Mth.abs(x * gridWidth + z);
+                if (i < this.states.size()) {
+                    return this.states.get(i);
+                }
             }
         }
         return Blocks.AIR.defaultBlockState();

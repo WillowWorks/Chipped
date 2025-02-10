@@ -9,6 +9,8 @@ import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -42,7 +44,11 @@ public class ModModelProvider extends ModelProvider {
         createSet(ModBlocks.RED_SANDSTONE);
         createSet(ModBlocks.SANDSTONE);
         createSet(ModBlocks.SNOW_BLOCK);
+        createSet(ModBlocks.COBWEB);
+        createSet(ModBlocks.LADDER);
+        createSet(ModBlocks.IRON_BARS);
 
+        ModBlockRegistries.VEGITATION.forEach(this::createSet);
         ModBlockRegistries.CARPET.forEach(this::createSet);
         ModBlockRegistries.FULL_BLOCKS.forEach(this::createSet);
         ModBlockRegistries.GLASS_PANE.forEach(this::createSet);
@@ -50,6 +56,8 @@ public class ModModelProvider extends ModelProvider {
         createColumnSet(ModBlocks.DRIED_KELP_BLOCK, null);
         createColumnSet(ModBlocks.MELON, null);
         createColumnSet(ModBlocks.BOOKSHELF, ResourceLocation.withDefaultNamespace("block/oak_planks"));
+
+        ModBlockRegistries.FLAT_ITEMS.forEach(this::createFlatItemSet);
     }
 
     private void createSet(ChippedPaletteRegistry registry) {
@@ -72,6 +80,21 @@ public class ModModelProvider extends ModelProvider {
                 MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model))
             );
             this.items.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block)));
+        }
+    }
+
+    private void createFlatItemSet(ChippedPaletteRegistry registry) {
+        List<Block> blocks = registry.boundStream().toList();
+
+        for (Block block : blocks) {
+            this.items.itemModelOutput.accept(
+                block.asItem(),
+                ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(
+                    ModelLocationUtils.getModelLocation(block.asItem()),
+                    TextureMapping.layer0(ModTexturedModels.texture(block, registry.getBasePath())),
+                    this.blocks.modelOutput
+                ))
+            );
         }
     }
 

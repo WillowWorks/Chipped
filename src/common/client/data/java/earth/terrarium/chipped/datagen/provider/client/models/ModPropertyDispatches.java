@@ -10,11 +10,17 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class ModPropertyDispatches {
 
-    public static final PropertyDispatch FACING = PropertyDispatch.property(BlockStateProperties.HORIZONTAL_FACING)
+    public static final PropertyDispatch FACING_REVERSED = PropertyDispatch.property(BlockStateProperties.HORIZONTAL_FACING)
         .select(Direction.SOUTH, Variant.variant())
         .select(Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
         .select(Direction.NORTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
         .select(Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
+
+    public static final PropertyDispatch FACING = PropertyDispatch.property(BlockStateProperties.HORIZONTAL_FACING)
+        .select(Direction.NORTH, Variant.variant())
+        .select(Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+        .select(Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
 
     public static final PropertyDispatch AXIS = PropertyDispatch.property(BlockStateProperties.AXIS)
         .select(Direction.Axis.Y, Variant.variant())

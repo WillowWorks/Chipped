@@ -120,6 +120,16 @@ public class ModBlockRegistries {
         ModBlocks.OCHRE_FROGLIGHT, ModBlocks.PEARLESCENT_FROGLIGHT, ModBlocks.VERDANT_FROGLIGHT
     );
 
+    public static final Iterable<ChippedPaletteRegistry> VEGITATION = List.of(
+        ModBlocks.LILY_PAD, ModBlocks.NETHER_SPROUTS, ModBlocks.CRIMSON_FUNGUS, ModBlocks.CRIMSON_ROOTS,
+        ModBlocks.WARPED_FUNGUS, ModBlocks.WARPED_ROOTS
+    );
+
+    public static final Iterable<ChippedPaletteRegistry> FLAT_ITEMS = Iterables.concat(
+        VEGITATION,
+        List.of(ModBlocks.COBWEB, ModBlocks.LADDER)
+    );
+
     public static final Iterable<ChippedPaletteRegistry> FULL_BLOCKS = Iterables.concat(
         WOOL, CONCRETE, GLAZED_TERRACOTTA, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE, GROUND, MATERIALS, RAW_ORES, LEAVES, LIGHTS,
         List.of(ModBlocks.BRICKS, ModBlocks.BORDERLESS_BRICKS, ModBlocks.MUD_BRICKS),

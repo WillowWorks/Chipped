@@ -8,30 +8,20 @@ import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
+import java.util.function.Function;
+
 public class ModTexturedModels {
 
     public static TexturedModel.Provider cube(ChippedPaletteRegistry registry, String suffix) {
-        String name = registry.getBasePath();
-        return TexturedModel.createDefault(
-            block -> TextureMapping.cube(texture(block, name).withSuffix(suffix)),
-            ModelTemplates.CUBE_ALL
-        );
+        return create(registry, "cube_all", suffix, TextureSlot.ALL);
     }
 
     public static TexturedModel.Provider cube(ChippedPaletteRegistry registry) {
-        String name = registry.getBasePath();
-        return TexturedModel.createDefault(
-            block -> TextureMapping.cube(texture(block, name)),
-            ModelTemplates.CUBE_ALL
-        );
+        return create(registry, "cube_all", TextureSlot.ALL);
     }
 
     public static TexturedModel.Provider rotated(ChippedPaletteRegistry registry) {
-        String name = registry.getBasePath();
-        return TexturedModel.createDefault(
-            block -> TextureMapping.singleSlot(TextureSlot.PATTERN, texture(block, name)),
-            ModelTemplates.GLAZED_TERRACOTTA
-        );
+        return create(registry, "template_glazed_terracotta", TextureSlot.PATTERN);
     }
 
     public static TexturedModel.Provider column(ChippedPaletteRegistry registry) {
@@ -51,21 +41,69 @@ public class ModTexturedModels {
     }
 
     public static TexturedModel.Provider carpet(ChippedPaletteRegistry registry) {
-        String ogname = registry.getBasePath();
-        String name = registry.getBasePath().replace("_carpet", "_wool");
+        String name = registry.getBasePath();
+        String root = registry.getRootPath();
         return TexturedModel.createDefault(
             block -> {
                 ResourceLocation key = block.builtInRegistryHolder().key().location();
                 return TextureMapping.wool(ResourceLocation.fromNamespaceAndPath(
                     key.getNamespace(),
-                    "block/%s/%s".formatted(name, key.getPath().replaceAll(ogname, name))
+                    "block/%s/%s".formatted(root, key.getPath().replaceAll(name, root))
                 ));
             },
             ModelTemplates.CARPET
         );
     }
 
-    private static ResourceLocation texture(Block block, String folder) {
+    public static TexturedModel.Provider lilypad(ChippedPaletteRegistry registry) {
+        return create(registry, "lily_pad", TextureSlot.TEXTURE);
+    }
+
+    public static TexturedModel.Provider cross(ChippedPaletteRegistry registry) {
+        return create(registry, "cross", TextureSlot.CROSS);
+    }
+
+    public static TexturedModel.Provider ladder(ChippedPaletteRegistry registry) {
+        return create(registry, "ladder", TextureSlot.TEXTURE);
+    }
+
+    public static TexturedModel.Provider ironbars(ChippedPaletteRegistry registry, String suffix) {
+        return create(registry, "iron_bars" + suffix, TextureSlot.create("edge"), TextureSlot.create("bars"));
+    }
+
+    public static TexturedModel.Provider pane(ChippedPaletteRegistry registry, String suffix) {
+        String name = registry.getBasePath();
+        String root = registry.getRootPath();
+        return create("template_glass_pane" + suffix, "", block -> {
+            var key = block.builtInRegistryHolder().key().location();
+            return ResourceLocation.fromNamespaceAndPath(
+                key.getNamespace(),
+                "block/%s/%s".formatted(root, key.getPath().replaceAll(name, root))
+            );
+        }, TextureSlot.EDGE, TextureSlot.PANE);
+    }
+
+    private static TexturedModel.Provider create(ChippedPaletteRegistry registry, String template, TextureSlot... slots) {
+        return create(registry, template, "", slots);
+    }
+
+    private static TexturedModel.Provider create(ChippedPaletteRegistry registry, String template, String suffix, TextureSlot... slots) {
+        String name = registry.getBasePath();
+        return create(template, suffix, block -> texture(block, name), slots);
+    }
+
+    private static TexturedModel.Provider create(String template, String suffix, Function<Block, ResourceLocation> texture, TextureSlot... slots) {
+        return TexturedModel.createDefault(
+            block -> {
+                var mapping = new TextureMapping();
+                for (TextureSlot slot : slots) mapping.put(slot, texture.apply(block).withSuffix(suffix));
+                return mapping;
+            },
+            ModelTemplates.create(template, slots)
+        );
+    }
+
+    public static ResourceLocation texture(Block block, String folder) {
         ResourceLocation key = block.builtInRegistryHolder().key().location();
         return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/%s/%s".formatted(folder, key.getPath()));
     }
