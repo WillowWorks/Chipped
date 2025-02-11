@@ -25,34 +25,38 @@ public class ModTexturedModels {
     }
 
     public static TexturedModel.Provider column(ChippedPaletteRegistry registry) {
-        String name = registry.getBasePath();
         return TexturedModel.createDefault(
-            block -> TextureMapping.column(texture(block, name), texture(block, name).withSuffix("_top")),
+            block -> TextureMapping.column(texture(registry, block), texture(registry, block).withSuffix("_top")),
             ModelTemplates.CUBE_COLUMN
         );
     }
 
     public static TexturedModel.Provider column(ChippedPaletteRegistry registry, ResourceLocation end) {
-        String name = registry.getBasePath();
+        return TexturedModel.createDefault(block -> TextureMapping.column(texture(registry, block), end), ModelTemplates.CUBE_COLUMN);
+    }
+
+    public static TexturedModel.Provider columnTop(ChippedPaletteRegistry registry) {
         return TexturedModel.createDefault(
-            block -> TextureMapping.column(texture(block, name), end),
+            block -> TextureMapping.column(texture(registry, block).withSuffix("_side"), texture(registry, block).withSuffix("_top")),
             ModelTemplates.CUBE_COLUMN
         );
     }
 
-    public static TexturedModel.Provider carpet(ChippedPaletteRegistry registry) {
-        String name = registry.getBasePath();
-        String root = registry.getRootPath();
-        return TexturedModel.createDefault(
-            block -> {
-                ResourceLocation key = block.builtInRegistryHolder().key().location();
-                return TextureMapping.wool(ResourceLocation.fromNamespaceAndPath(
-                    key.getNamespace(),
-                    "block/%s/%s".formatted(root, key.getPath().replaceAll(name, root))
-                ));
-            },
-            ModelTemplates.CARPET
+    public static TexturedModel.Provider columnTopBottom(ChippedPaletteRegistry registry) {
+        return columnTopBottom(registry, "");
+    }
+
+    public static TexturedModel.Provider columnTopBottom(ChippedPaletteRegistry registry, String topSuffix) {
+        return TexturedModel.createDefault(block -> new TextureMapping()
+                .put(TextureSlot.TOP, texture(registry, block).withSuffix("_top").withSuffix(topSuffix))
+                .put(TextureSlot.BOTTOM, texture(registry, block).withSuffix("_bottom"))
+                .put(TextureSlot.SIDE, texture(registry, block).withSuffix("_side")),
+            ModelTemplates.CUBE_BOTTOM_TOP
         );
+    }
+
+    public static TexturedModel.Provider carpet(ChippedPaletteRegistry registry) {
+        return TexturedModel.createDefault(block -> TextureMapping.wool(texture(registry, block)), ModelTemplates.CARPET);
     }
 
     public static TexturedModel.Provider lilypad(ChippedPaletteRegistry registry) {
@@ -72,15 +76,18 @@ public class ModTexturedModels {
     }
 
     public static TexturedModel.Provider pane(ChippedPaletteRegistry registry, String suffix) {
-        String name = registry.getBasePath();
-        String root = registry.getRootPath();
-        return create("template_glass_pane" + suffix, "", block -> {
-            var key = block.builtInRegistryHolder().key().location();
-            return ResourceLocation.fromNamespaceAndPath(
-                key.getNamespace(),
-                "block/%s/%s".formatted(root, key.getPath().replaceAll(name, root))
-            );
-        }, TextureSlot.EDGE, TextureSlot.PANE);
+        return create("template_glass_pane" + suffix, "", block -> texture(registry, block), TextureSlot.EDGE, TextureSlot.PANE);
+    }
+
+    public static TexturedModel.Provider trapdoor(ChippedPaletteRegistry registry, String suffix) {
+        return create("template_trapdoor" + suffix, "", block -> texture(registry, block), TextureSlot.TEXTURE);
+    }
+
+    public static TexturedModel.Provider door(ChippedPaletteRegistry registry, String suffix) {
+        return create("door" + suffix, suffix.replaceAll("(_left|_right)(_open)?$", ""),
+            block -> texture(registry, block),
+            TextureSlot.TOP, TextureSlot.BOTTOM
+        );
     }
 
     private static TexturedModel.Provider create(ChippedPaletteRegistry registry, String template, TextureSlot... slots) {
@@ -88,8 +95,7 @@ public class ModTexturedModels {
     }
 
     private static TexturedModel.Provider create(ChippedPaletteRegistry registry, String template, String suffix, TextureSlot... slots) {
-        String name = registry.getBasePath();
-        return create(template, suffix, block -> texture(block, name), slots);
+        return create(template, suffix, block -> texture(registry, block), slots);
     }
 
     private static TexturedModel.Provider create(String template, String suffix, Function<Block, ResourceLocation> texture, TextureSlot... slots) {
@@ -103,8 +109,14 @@ public class ModTexturedModels {
         );
     }
 
-    public static ResourceLocation texture(Block block, String folder) {
+    @SuppressWarnings("deprecation")
+    public static ResourceLocation texture(ChippedPaletteRegistry registry, Block block) {
+        String base = registry.getBasePath();
+        String root = registry.getRootPath();
         ResourceLocation key = block.builtInRegistryHolder().key().location();
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/%s/%s".formatted(folder, key.getPath()));
+        return ResourceLocation.fromNamespaceAndPath(
+            key.getNamespace(),
+            "block/%s/%s".formatted(root, key.getPath().replaceAll(base, root))
+        );
     }
 }

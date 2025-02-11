@@ -7,7 +7,6 @@ import earth.terrarium.chipped.datagen.provider.base.ModelProvider;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
-import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
@@ -48,13 +47,9 @@ public class ModModelProvider extends ModelProvider {
         createSet(ModBlocks.LADDER);
         createSet(ModBlocks.IRON_BARS);
 
-        ModBlockRegistries.VEGITATION.forEach(this::createSet);
-        ModBlockRegistries.CARPET.forEach(this::createSet);
-        ModBlockRegistries.FULL_BLOCKS.forEach(this::createSet);
+        ModBlockRegistries.GENERIC_BLOCKS.forEach(this::createSet);
         ModBlockRegistries.GLASS_PANE.forEach(this::createSet);
 
-        createColumnSet(ModBlocks.DRIED_KELP_BLOCK, null);
-        createColumnSet(ModBlocks.MELON, null);
         createColumnSet(ModBlocks.BOOKSHELF, ResourceLocation.withDefaultNamespace("block/oak_planks"));
 
         ModBlockRegistries.FLAT_ITEMS.forEach(this::createFlatItemSet);
@@ -62,11 +57,11 @@ public class ModModelProvider extends ModelProvider {
 
     private void createSet(ChippedPaletteRegistry registry) {
         List<Block> blocks = registry.boundStream().toList();
-        ModelGenerator generator = new ModelGenerator(registry, this.blocks.modelOutput);
+        ModelGenerator generator = new ModelGenerator(registry, this.modelOutput);
 
         for (Block block : blocks) {
-            this.blocks.blockStateOutput.accept(generator.generate(block));
-            this.items.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block)));
+            this.addBlock(generator.generate(block));
+            this.addItem(block, ModelLocationUtils.getModelLocation(block));
         }
     }
 
@@ -75,11 +70,9 @@ public class ModModelProvider extends ModelProvider {
         var provider = end == null ? ModTexturedModels.column(registry) : ModTexturedModels.column(registry, end);
 
         for (Block block : blocks) {
-            var model = provider.create(block, this.blocks.modelOutput);
-            this.blocks.blockStateOutput.accept(
-                MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model))
-            );
-            this.items.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block)));
+            var model = provider.create(block, this.modelOutput);
+            this.addBlock(MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model)));
+            this.addItem(block, ModelLocationUtils.getModelLocation(block));
         }
     }
 
@@ -87,13 +80,13 @@ public class ModModelProvider extends ModelProvider {
         List<Block> blocks = registry.boundStream().toList();
 
         for (Block block : blocks) {
-            this.items.itemModelOutput.accept(
-                block.asItem(),
-                ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(
+            this.addItem(
+                block,
+                ModelTemplates.FLAT_ITEM.create(
                     ModelLocationUtils.getModelLocation(block.asItem()),
-                    TextureMapping.layer0(ModTexturedModels.texture(block, registry.getBasePath())),
-                    this.blocks.modelOutput
-                ))
+                    TextureMapping.layer0(ModTexturedModels.texture(registry, block)),
+                    this.modelOutput
+                )
             );
         }
     }

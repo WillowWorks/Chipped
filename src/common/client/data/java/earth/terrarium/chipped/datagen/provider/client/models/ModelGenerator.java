@@ -24,12 +24,18 @@ public class ModelGenerator {
         Generator.of(CarpetBlock.class, create("carpet", ModTexturedModels::carpet)),
         Generator.of(WaterlilyBlock.class, create("lily_pad", ModTexturedModels::lilypad)),
         Generator.of(WebBlock.class, create("cobweb", ModTexturedModels::cross)),
+        Generator.of(PumpkinBlock.class, create("pumpkin", ModTexturedModels::columnTopBottom)),
+        Generator.of(BarrelBlock.class, ModStateGenerators::barrel),
+        Generator.of(TrapDoorBlock.class, ModStateGenerators::trapdoor),
+        Generator.of(DoorBlock.class, ModStateGenerators::door),
 
         Generator.of(Blocks.CRIMSON_FUNGUS, create("crimson_fungus", ModTexturedModels::cross)),
         Generator.of(Blocks.CRIMSON_ROOTS, create("crimson_roots", ModTexturedModels::cross)),
         Generator.of(Blocks.WARPED_FUNGUS, create("crimson_fungus", ModTexturedModels::cross)),
         Generator.of(Blocks.WARPED_ROOTS, create("crimson_roots", ModTexturedModels::cross)),
         Generator.of(Blocks.NETHER_SPROUTS, create("nether_sprouts", ModTexturedModels::cross)),
+        Generator.of(Blocks.MELON, create("melon", ModTexturedModels::column)),
+        Generator.of(Blocks.DRIED_KELP_BLOCK, create("dried_kelp", ModTexturedModels::column)),
         Generator.of(Blocks.IRON_BARS, ModStateGenerators::ironbars),
 
         Generator.of(IronBarsBlock.class, ModStateGenerators::pane), // Has to be after iron bars or it will match ironbars

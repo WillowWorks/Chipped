@@ -126,15 +126,21 @@ public class ModBlockRegistries {
     );
 
     public static final Iterable<ChippedPaletteRegistry> FLAT_ITEMS = Iterables.concat(
-        VEGITATION,
-        List.of(ModBlocks.COBWEB, ModBlocks.LADDER)
+        GLASS_PANE,
+        List.of(
+            ModBlocks.LILY_PAD, ModBlocks.NETHER_SPROUTS, ModBlocks.CRIMSON_FUNGUS, ModBlocks.CRIMSON_ROOTS,
+            ModBlocks.WARPED_FUNGUS, ModBlocks.WARPED_ROOTS
+        ),
+        List.of(ModBlocks.COBWEB, ModBlocks.LADDER, ModBlocks.IRON_BARS)
     );
 
-    public static final Iterable<ChippedPaletteRegistry> FULL_BLOCKS = Iterables.concat(
+    public static final Iterable<ChippedPaletteRegistry> GENERIC_BLOCKS = Iterables.concat(
         WOOL, CONCRETE, GLAZED_TERRACOTTA, TERRACOTTA, PLANK, LOG, STRIPPED_LOG, GLASS, STONE, GROUND, MATERIALS, RAW_ORES, LEAVES, LIGHTS,
+        VEGITATION, CARPET, WOOD_TRAPDOOR, WOOD_DOOR,
+        List.of(ModBlocks.BARREL),
         List.of(ModBlocks.BRICKS, ModBlocks.BORDERLESS_BRICKS, ModBlocks.MUD_BRICKS),
         List.of(ModBlocks.HAY_BLOCK, ModBlocks.MOSS_BLOCK, ModBlocks.BONE_BLOCK, ModBlocks.MANGROVE_ROOTS),
-        List.of(ModBlocks.BROWN_MUSHROOM_BLOCK, ModBlocks.RED_MUSHROOM_BLOCK, ModBlocks.MUSHROOM_STEM),
+        List.of(ModBlocks.BROWN_MUSHROOM_BLOCK, ModBlocks.RED_MUSHROOM_BLOCK, ModBlocks.MUSHROOM_STEM, ModBlocks.PUMPKIN, ModBlocks.MELON, ModBlocks.DRIED_KELP_BLOCK),
         List.of(ModBlocks.WARPED_WART_BLOCK, ModBlocks.NETHER_WART_BLOCK, ModBlocks.SOUL_SAND),
         List.of(ModBlocks.SPONGE) // TODO These blocks really shouldn't exist imo - Sophie
     );
